@@ -10,8 +10,24 @@ beyond the two web fonts.
 ## The loop
 
 ```
-key-points.md  +  book/*.md   ->   python3 build.py   ->   index.html
+key-points.md  +  book/*.md                    ->  python3 build.py  ->  index.html
+                                 +  inspiration/*.md                 ->  draft.html
 ```
+
+Two outputs, and the split is deliberate:
+
+| File | Contains | Fate |
+|---|---|---|
+| `index.html` | the book | committed, pushed, public |
+| `draft.html` | the book **plus** everything in `inspiration/` | gitignored, never leaves the machine |
+
+`inspiration/` is the workshop: raw stories, notes, half-thoughts, the sources
+the book borrows shape from. It is gitignored too, so none of it is on GitHub.
+
+There is no flag to remember and no build mode to get wrong. Private material
+has nowhere to go except `draft.html`, so a half-written story cannot reach
+the public book by accident. Drop any `.md` into `inspiration/` and it is
+picked up by glob, no list to edit. See `inspiration/README.md`.
 
 That is the whole system. `build.py` is stdlib only Python: no pandoc, no
 markdown package, no npm.
@@ -44,6 +60,7 @@ template in a comment at the top.
 | Part Two, The Lessons | **written.** 9 chapters, built from 42 sayings collected from 13 people |
 | The Sayings (appendix) | all 42, unedited, in the order they were written down |
 | Part Three, The Open Ending | designed, not built. Interactive, LLM behind it |
+| The Workshop (`draft.html` only) | seeded with the sources, waiting on your stories |
 
 Part Two exists because the sayings were already written down. Part One does
 not exist yet because the turning points were not. That asymmetry is the
@@ -64,7 +81,9 @@ template.html    the book: typography, paginator, page turning
 vendor/          StPageFlip, vendored so the book works offline
 key-points.md    Part One. THE FILE YOU EDIT
 book/            Part Two and the front matter, one file per chapter
+inspiration/     the workshop. Private, gitignored, draft.html only
 index.html       generated, committed so it works from a plain clone
+draft.html       generated, gitignored, the book plus the workshop
 sayings.txt      the raw source Part Two was built from
 ```
 

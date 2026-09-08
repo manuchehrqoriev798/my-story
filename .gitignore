@@ -2,6 +2,12 @@
 __pycache__/
 *.pyc
 
+# The workshop. Raw stories and notes, and the draft book they render into.
+# Private by decision: this never goes to GitHub. index.html is the public
+# book and build.py cannot put any of this into it.
+inspiration/
+draft.html
+
 # Playwright MCP scratch: screenshots, page snapshots, console logs.
 # Everything captured while checking how the book renders lands here.
 .playwright-mcp/
