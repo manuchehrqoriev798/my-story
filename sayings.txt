@@ -1,0 +1,315 @@
+here are my personal telegram kinda that from here you can get some info:
+
+
+> Manu Talks:
+⚠️⚠️⚠️
+I share thoughts and information here.
+If someone chooses to blindly follow whatever they hear/read, that’s not on the person who shared it; at that point, it’s natural selection.
+
+⚠️⚠️⚠️
+Основной контент канала будет на английском языке.
+При желании вы можете переводить посты самостоятельно.
+
+⚠️⚠️⚠️
+Мундариҷаи асосии канал ба забони англисӣ.
+Хоҳетон паёмҳа худатон тарҷума кунед.
+
+> Manuchehr Qoriev:
+Some useful coding resources and my thoughts about related to coding/ai stuff
+Part 1
+
+In the beginning of Your career choosing  that best* programming language and debating what is best aint worth it (just by doing this You are wasting time for actually learning how to code; eventually changing will be relatively not hard as long as You choose top15 programming language not Assembly or something): Based on interest for what You want just choose one and go with it: I would personally go with Python simple but yet powerful with tone of libraries; then You can change to whatever You want Java C# Go Rust. If you know like i want this and for this LLM is suggesting this programming language but not python go with that;
+For python good resource only get for Beginner one then learn via projects (project based learning is the best): https://stepik.org/course/58852/promo
+(Im not fan of udemy coursera courses but if they r good for You go with them; YouTube courses + Projects are also great tool for learning)
+
+
+
+If You are student You can get student package for Github Premium, Copilot (Antigiravity + Cursor IDE also have but limited); basically after getting copilot you will have access to latest llm models like chatgpt; clould; gemini (for coding copilot is shit my opinion even paid version Cursor 20$ subscription is way better)
+
+
+Best YouTuber to recive short and quality info about tech/coding/ai: https://youtube.com/@fireship?si=OKEPo1ggO6FFNBvd
+
+
+My boi Neetcode for cracking LeetCodes: https://youtube.com/@neetcode?si=EqRWFksijGhqM6_R
+His roadmap go till trees my opinion: https://neetcode.io/
+
+
+
+Benchmarks aren't accurate but give You good understanding about most powerful models out there: 
+https://livebench.ai/#/
+
+
+For editing Your resume: https://www.overleaf.com/project
+Can sample of get pdf or latex file from my website: https://qoriev-manuchehr.vercel.app/
+Jake resume: https://www.overleaf.com/latex/templates/jakes-resume/syzfjbzwjncs
+Not necessarily you should get highest score here but yeah as source of kinda review its good: https://resumeworded.com/score
+
+
+sample of Yandex; Kudos to Ilkhom for sharing it: https://t.me/ilkhom_logs
+https://docs.google.com/spreadsheets/d/1pVG59geIiUiHD3JQOKlJKQBY1TRY-7dGBxlRnkn_sqI/edit?usp=sharing
+
+Russian Dev Intership website:
+https://postypashki.ru/%D1%81%D1%82%D0%B0%D0%B6%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8/
+
+Russian Dev Intership tg:
+https://t.me/sns_jobs
+
+> Manuchehr Qoriev:
+Part 2
+
+⡢⠧⡎⢈⢆⢈⠫⠳⢈⠧⡚⢈⡕⡙⡓⠮⡣⠭⡜⠺⡥⠳⢈⠧⡚⢈⢆⢈⠧⡍⢈⡦⠺⡜⠹⡓⡣⡜⢈⢌⢌⢑⠓⠧⠺⠕⡒⡆⢈⢈⡓⢈⠹⠳⡋⡋⢈⡎⠧⠹⠆⢆⡚⢈⠺⡜⢈⡓⡇⢈⡜⠹⠧⡜⢈⠺⡜⡚⢈⡋⠺⡇⠳⢈⡜⠹⠺⡚⡒⡆⢈⠮⡓⡎⡎⡓⠆⢑⡪⢈⡕⠳⡙⡚⡕⠳⠭⡜⠺⡥⠳⢈⠺⡚⢈⡜⠹⠧⡜⢈⡎⡓⡜⢈⡣⡚⠺⡎⠶⢈⢌⢌⢑⢈⠺⡚⢈⡚⡜⡣⡕⠺⠮⢈⡚⠺⡎⠭⠳⢈⠳⡥⠳⡎⡜⡣⠧⡋⡋⡪⢈⡜⠹⠳⡪⢈⡦⠺⡋⡋⢈⠫⠳⢈⠧⢈⠶⡙⠳⠧⡜⢈⡜⡓⡓⡋⢈⡦⠹⠺⠭⠹⢈⡕⠳⡓⡕⡋⠳⢈⡦⠹⡓⢈⡇⡎⡓⡦⢈⠹⡓⡦⢈⡜⡓⢈⡣⡚⠳⢈⡜⠹⠳⡍⢈⡦⠺⡋⡋⢈⠹⠧⡥⠳⢈⠭⡓⡍⡕⠧⡙⠧⡜⠺⡥⠳⢈⠧⠮⡥⠧⡎⡜⠧⠶⠳⡉⢈⢆⢈⡣⡚⠳⢈⠺⡜⢈⠹⠳⠧⡥⠺⡋⡪⢈⠫⡣⡜⢈⡇⠺⡎⠮⠧⢈⡚⡋⡓⡦⡋⡪⢈⡜⡙⡪⠺⡎⠶⢈⡍⡪⢈⠫⠳⡚⡜⢈⡜⡓⢈⠮⠳⡋⠺⠶⠧⡜⠳⢈⡓⡙⢈⡇⠺⡎⠮⠧⢈⡣⡚⠳⢈⠺⡜⢈⡍⡓⡙⠳⢈⠳⠵⠵⠳⠭⡜⠺⡥⠳⡋⡪⡉⢈⢤⠺⡎⠭⠳⢈⠧⠺⢈⠧⠺⡎⡜⢈⠧⠭⠭⡣⡙⠧⡜⠳⢈⠧⡋⡋⢈⡜⠹⠳⢈⡜⠺⡍⠳⢈⠧⡎⠮⢈⠧⡋⡋⢈⡜⠹⠳⡚⠳⢈⡚⡜⡣⠵⠵⢈⡓⠵⢈⠧⠺⢈⡦⠺⡋⡋⢈⡜⠧⡇⠳⢈⡪⡓⡣⡙⢈⠼⡓⠫⢈⠺⡚⢈⡚⡜⡣⡕⠺⠮⢈⠺⠵⢈⠺⡜⢈⠭⠧⡎⢈⡙⠳⡕⡋⠧⠭⠳⢈⠮⠳⡥⠳⡋⡓⡕⠳⡙⡚⢈⡜⠹⠳⡎⢈⠧⡚⢈⠹⡣⡍⠧⡎⠺⡜⡪⢈⡦⠳⢈⠧⡙⠳⢈⠭⡓⡓⡇⠳⠮⢈⡚⡓⢈⠮⡓⡎⡜⢈⡦⡓⡙⡙⡪⢈⠺⠵⢈⠺⡜⢈⡦⠺⡋⡋⢈⡜⠧⡇⠳⢈⠮⠳⡥⢈⠼⡓⠫⡚⢈⡜⠹⠳⡎⢈⡎⡓⢈⠼⡓⠫⡚⢈⡦⠺⡋⡋⢈⠫⠳⢈⡋⠳⠵⡜⡉⢈⠶⠶⠆⠆⢰⡚⠺⡎⠶⢈⡘⢆⢈⠳⠵⠵⠳⠭⡜⠺⡥⠳⡋⡪⢈⠮⡓⠳⡚⡎⡜⢈⡍⠳⠧⡎⢈⠼⡣⡚⡜⢈⠭⡓⡕⡪⢈⡕⠧⡚⡜⠺⡎⠶⢈⠳⡙⡙⡓⡙⢈⠧⡎⠮⢈⡜⠳⡋⡋⠺⡎⠶⢈⡜⡓⢈⡙⠳⡚⡓⡋⡥⠳⢈⠺⡜⡉⢈⠳⡙⡙⡓⡙⢈⠭⡓⡣⡋⠮⢈⠫⠳⢈⡙⠳⡚⡓⡋⡥⠳⠮⢈⡎⡓⡜⢈⠭⡓⡙⡙⠳⠭⡜⡋⡪⢈⡓⡙⢈⠼⡣⡚⡜⢈⠫⡪⢈⡙⠳⡍⡓⡥⠺⡎⠶⢈⠭⡓⡍⡕⡓⡎⠳⡎⡜⢈⡜⠳⠭⠹⡎⠺⠭⠧⡋⡋⡪⢈⠺⡜⢈⠮⠺⠮⢈⡚⡓⡋⡥⠳⢈⡜⠹⠳⢈⠺⡚⡚⡣⠳⢈⠫⡣⡜⢈⠺⡚⢈⠺⡜⢈⡦⠹⠧⡜⢈⣈⡓⡣⢈⡦⠧⡎⡜⡉⢈⡚⡓⢈⡪⠳⠧⠹⢈⠺⡍⡕⡙⡓⡥⠺⡎⠶⢈⢘⡙⡓⡍⡕⡜⢈⡨⡎⠶⠺⡎⠳⠳⡙⠺⡎⠶⢈⡓⡙⢈⡢⡓⡎⡜⠳⡩⡜⢈⡨⡎⠶⠺⡎⠳⠳⡙⠺⡎⠶⢈⠺⡚⢈⡜⠹⠳⢈⡦⠧⡪⢈⡜⡓⢈⠶⡓⠆⠆⠆⠆⠆⠆⢆⠵⢈⢆⢈⡦⡓⡣⡋⠮⢈⠹⠧⡥⠳⢈⡜⡓⢈⡚⠳⠧⡙⠭⠹⢈⠵⡓⡙⢈⠧⢈⠼⡓⠫⢈⢆⢈⡦⡓⡣⡋⠮⢈⠶⡓⢈⡦⠺⡜⠹⢈⡜⠹⠺⡚⡆⢈⠆⣂⠧⡎⡎⠧⢈⠶⠳⡜⢈⠼⡓⠫⡉⢈⠫⠳⡚⡜⢈⡦⠧⡪⢈⠺⡚⢈⡜⡓⢈⠶⡓⢈⡜⠹⡙⡓⡣⠶⠹⢈⡙⠳⠵⠳⡙⡙⠧⡋⡚⢈⡚⠺⡎⠭⠳⢈⠺⡎⢈⡎⡓⡦⠧⠮⠧⡪⡚⢈⡍⠧⡙⡇⠳⡜⢈⢈⡓⠵⢈⡜⡓⡎⠳⢈⡓⠵⢈⡘⢨⢤⢈⠧⡎⠮⢈⠫⡣⡙⠳⠧⡣⠭⡙⠧⠭⡪⢈⠜⢈⡙⠳⠵⠳⡙⡙⠧⡋⡚⢈⡕⡙⡓⡥⠺⠮⠳⢈⠵⠧⡚⡜⠳⡚⡜⢈⡓⡕⡜⠺⡓⡎⢈⡜⡓⢈⠶⡓⢈⡜⠺⡋⡋⢈⠺⡎⡜⠳⡙⡥⠺⠳⡦⢈⠧⡎⠮⢈⡜⠹⠳⡙⠳⢈⡪⡓⡣⢈⡚⠹⡓⡣⡋⠮⢈⡚⠹⡓⡦⢈⡓⠵⢈⡪⡓⡣⡙⢈⠧⠫⠺⡋⠺⡜⠺⠳⡚⢈⡜⡓⢈⠶⠳⡜⢈⠹⠺⡙⠳⠮⡉⢈⠆⠹⠹⠣⡙⡣⢈⠺⡚⢈⠶⡓⡓⠮⢈⠺⠵⢈⣈⡓⡣⢈⡦⠧⡎⡎⠧⢈⠶⠳⡜⢈⡚⡓⡍⠳⢈⠼⡓⠫⢈⡙⠳⡋⠧⡜⠳⠮⢈⡜⡓⢈⡜⠳⠧⠭⠹⠳⡙⢈⡓⠵⢈⡕⡙⡓⠶⡙⠧⡍⡍⠺⡎⠶⢈⡓⡙⢈⡚⡓⡍⠳⡜⠹⠺⡎⠶⢈⡋⠺⡇⠳⢈⡜⠹⠺⡚⢈⠵⡓⡙⢈⡍⡓⡙⠳⢈⡋⠺⡇⠳⢈⠼⡓⠫⢈⠼⡓⠫⢈⠺⠮⡇⢈⠺⡜⡚⢈⡕⡙⠳⡜⡜⡪⢈⡣⡚⠳⡋⠳⡚⡚⢈⠵⡙⡓⡍⢈⡍⡪⢈⠳⡩⡕⠳⡙⠺⠳⡎⠭⠳⡉⢈⠓⢌⡓⡦⢈⠭⡓⡎⡥⠳⡙⡚⠺⡓⡎⢈⡙⠧⡜⠳⠕⠆⢌⠺⡎⡇⠮⠳⡎⢈⠧⡚⢈⡚⡓⡣⡙⠭⠳⢈⡓⠵⢈⠵⠺⡎⠮⠺⡎⠶⢈⠼⡓⠫⡉⢈⠮⠧⡍⡎⢈⠺⢈⡍⠳⠧⡎⢈⠺⠮⡇⢈⠫⡣⡜⢈⡦⠹⠳⡎⢈⠺⢈⡜⡙⠺⠳⠮⢈⠺⡜⢈⡦⠧⡚⢈⡚⠹⠺⡜⢈⡜⡓⡓⢈⡚⡕⠧⡍⡍⡪⢈⠙⢈⡋⡓⡦⢈⠭⡓⡎⡥⠳⡙⡚⠧⡜⠺⡓⡎⢈⡙⠧⡜⠳⢈⠫⠧⡚⠳⠮⢈⡓⡎⢈⡍⡪⢈⠳⡩⡕⠳⡙⠺⠳⡎⠭⠳⡉⢈⠫⡣⡜⢈⠧⡚⢈⡚⡓⡣⡙⠭⠳⢈⡓⠵⢈⠵⠺⡎⠮⠺⡎⠶⢈⡕⠳⡓⡕⡋⠳⢈⡦⠹⡓⢈⡦⡓⡙⡇⢈⠧⡜⢈⡚⡓⡍⠳⢈⡕⡋⠧⠭⠳⢈⠧⡎⠮⢈⠶⠳⡜⡜⠺⡎⠶⢈⡙⠳⠵⠳⡙⡙⠧⡋⡚⢈⡜⠹⠧⡜⡚⢈⠶⡙⠳⠧⡜⢈⡙⠳⡚⡓⡣⡙⠭⠳⢈⠼⡣⡚⡜⢈⠵⠺⡎⠮⢈⡕⠳⡙⡚⡓⡎⢈⠧⡎⠮⢈⠮⡓⡎⡜⢈⠫⠳⢈⡚⠹⡪⢈⡜⡓⢈⠮⠺⡙⠳⠭⡜⡋⡪⢈⡍⠳⡚⡚⠧⠶⠳⢈⡚⠧⡍⠳⢈⡚⠹⡓⡙⡜⢈⠧⡎⠮⢈⠭⡋⠳⠧⡎⢈⡜⠹⠧⡜⢈⡪⡓⡣⢈⡦⠧⡎⡎⠧⢈⡦⡓⡙⡇⢈⠧⡜⢈⣄⢈⠭⠧⡎⢈⡪⡓⡣⢈⡙⠳⠵⠳⡙⠧⡋⢈⡍⠳⡉⢈⠶⠶⠆⡰⡙⠳⠳⡋⠧⡎⠭⠳⢈⡦⠳⠫⡚⠺⡜⠳⡚⡉⢈⡎⠧⠹⢈⠺⢈⡍⠳⠧⡎⢈⠵⡓⡙⢈⠮⠳⡚⠺⠶⡎⠳⡙⡚⢈⠧⡎⠮⢈⠳⡜⠭⢈⠺⡜⡚⢈⠶⡓⡓⠮⢈⠫⡣⡜⢈⡎⡓⡜⢈⠵⡓⡙⢈⠮⠳⡥⢈⡕⠳⡙⡚⡓⡎⢈⠺⠵⢈⣈⡓⡣⢈⡦⠧⡎⡎⠧⢈⠶⡙⡓⡦⢈⠧⡚⢈⡚⡕⠳⠭⠺⠧⡋⠺⡚⡜⡉⢈⠵⡓⠭⡣⡚⢈⠫⠳⡜⡜⠳⡙⢈⡓⡎⢈⠳⡎⠹⠧⡎⠭⠺⡎⠶⢈⡚⡇⠺⡋⡋⢈⠧⡎⠮⢈⠶⠳⡜⡜⠺⡎⠶⢈⠼⡓⠫⢈⡓⡙⢈⠮⡓⠺⡎⠶⢈⣈⡓⡣⡙⢈⡓⡦⡎⢈⡚⡜⠧⡙⡜⡣⡕⡉⢈⠆⡤⡓⠺⡎⠶⢈⡓⡕⠳⡎⡚⡓⡣⡙⠭⠳⢈⡜⡓⢈⡚⠹⡓⡦⢈⡓⠵⢈⡜⠹⠧⡜⢈⣈⡓⡣⢈⠧⡙⠳⢈⠶⡓⡓⠮⢈⡚⡕⠳⠭⠺⡋⠺⡚⡜⢈⡜⡓⢈⠺⡎⠭⡙⠳⠧⡚⠳⢈⠭⠹⠧⡎⠭⠳⢈⡓⠵⢈⡋⠧⡎⠮⠺⡎⠶⢈⠼⡓⠫⡉⢈⡜⡓⡜⠧⡋⢈⠫⡣⡋⡋⡚⠹⠺⡜⡉⢈⠺⠵⢈⣈⡓⡣⢈⠧⡙⠳⢈⠶⡓⡓⠮⢈⠳⡎⡓⠹⠶⢈⡜⡓⢈⠭⡓⡎⡜⡙⠺⠫⡣⡜⠳⢈⡜⡓⢈⠶⡓⡓⠮⢈⡓⡕⠳⡎⡚⡓⡣⡙⠭⠳⢈⡜⠹⠳⡎⢈⡪⡓⡣⢈⠭⠧⡎⢈⠧⡋⡙⠳⠧⠮⡪⢈⠶⠳⡜⢈⡜⠹⠳⢈⠼⡓⠫⡉⢈⡚⡓⡍⠳⢈⡓⡕⠳⡎⡚⡓⡣⡙⠭⠳⢈⡣⡕⠮⠧⡜⠳⡚⢈⠧⠺⡎⡜⢈⠶⡓⡎⡎⡎⠧⢈⠺⡎⠭⡙⠳⠧⡚⠳⢈⣈⡓⡣⡙⢈⠭⠹⠧⡎⠭⠳⢈⡓⠵⢈⡋⠧⡎⠮⠺⡎⠶⢈⠼⡓⠫⡉⢈⠵⡓⡙⢈⡋⠧⡎⠮⠺⡎⠶⢈⠼⡓⠫⢈⠵⠺⡙⡚⡜⢈⡍⠧⡇⠳⢈⡜⡓⢈⠺⡎⡜⠳⡙⡥⠺⠳⡦⢈⡓⡙⢈⡕⠧⡚⡚⢈⡘⢨⢤⢈⠵⠺⡙⡚⡜⢈⡆⠕⢈⠶⡓⡓⡓⠮⢈⡋⡣⠭⡇⠆⠆⢆⢈⡕⠳⡙⡚⡓⡎⠧⡋⡋⡪⢈⡦⠳⡎⡜⢈⡋⠺⡇⠳⢈⡚⡇⠺⡕⢈⠵⡙⠳⠳⡋⠧⡎⠭⠳⠥⡜⠳⠧⠭⠹⠺⡎⠶⠥⡓⡕⠳⡎⡚⡓⡣⡙⠭⠳⢈⠧⡎⠮⢈⠵⡓⠭⡣⡚⢈⡓⡎⢈⠳⡎⠹⠧⡎⠭⠺⡎⠶⢈⡚⡇⠺⡋⡋⡚⢈⡜⠹⡙⡓⡣⠶⠹⢈⠮⡓⠺⡎⠶⢈⡚⡜⠧⡙⡜⡣⡕⢈⡦⠺⡜⠹⢈⡍⡪⢈⠵⡙⠺⠳⡎⠮⡚⢈⠙⢈⡋⠳⠳⡜⠭⡓⠮⠳⢈⡦⠹⠺⡋⠳⢈⠺⡎⢈⡕⠧⡙⠧⡋⡋⠳⡋⢈⠧⡕⡕⡋⡪⠺⡎⠶⢈⡜⡓⢈⠼⡓⠫⡚⡉⢈⠳⡥⠳⡎⡜⡣⠧⡋⡋⡪⢈⠶⡓⡜⢈⠧⢈⠼⡓⠫⡉⢈⠮⡓⡎⡎⡓⢈⠺⡜⢈⡚⠳⠳⡍⡚⢈⡍⡓⡚⡜⢈⡓⡕⡜⠺⡍⠧⡋⢈⡚⠺⡎⠭⠳⢈⡎⡓⡦⠧⠮⠧⡪⡚⢈⠺⠵⢈⡪⡓⡣⢈⠹⠧⡥⠳⢈⡎⡓⢈⠭⡓⡍⡍⠳⡙⠭⠺⠧⡋⢈⠳⡩⡕⠳⡙⠺⠳⡎⠭⠳⢈⡋⠳⡚⡚⢈⡋⠺⡇⠳⡋⡪⢈⡪⡓⡣⢈⠶⡓⡎⡎⠧⢈⠶⠳⡜⢈⡜⠹⠳⢈⠼⡓⠫⡉⢈⢆⠵⢈⡪⡓⡣⢈⠶⠳⡜⢈⡜⠹⠳⢈⠼⡓⠫⢈⠶⡙⠳⠧⡜⢈⠺⠵⢈⡎⡓⢈⣈⡓⡣⢈⠹⠧⡥⠳⢈⠺⡍⡕⡙⡓⡥⠳⠮⢈⣈⡓⡣⡙⢈⡚⡇⠺⡋⡋⡚⢈⡜⠹⡙⡓⡣⠶⠹⢈⡚⡜⠧⡙⡜⡣⡕⡉
+
+> Manuchehr Qoriev:
+🖼 Some stuff to think about; 
+
+⢆⡇⠺⠶⠧⠺⡆⢈⡕⡣⡙⡕⡓⡚⠳⢈⡓⠵⢈⡋⠺⠵⠳⡉⢈⠮⡣⡙⠺⡎⠶⢈⠧⡕⡕⡋⡪⠺⡎⠶⢈⡓⠵⢈⡣⡎⠺⢈⠙⢈⠭⠹⡓⡓⡚⠺⡎⠶⢈⡕⡙⡓⠵⠳⡚⡚⠺⡓⡎⢈⠺⢈⡜⠹⡓⡣⠶⠹⡜⢈⠧⢈⡋⡓⡜⢈⠧⠫⡓⡣⡜⢈⡜⠹⠺⡚⡉⢈⠺⢈⠭⠹⡓⡓⡚⠳⢈⠫⠳⠭⡓⡍⠺⡎⠶⢈⠮⠳⡥⢈⠶⡣⡪⢈⡚⠺⡎⠭⠳⢈⡦⠹⠧⡜⢈⡦⡓⡙⡋⠮⢈⡎⠳⠳⠮⡚⢈⠧⡎⠮⢈⡦⠹⠧⡜⢈⡪⡓⡣⢈⠭⠧⡎⢈⠫⠳⢈⡕⠧⠺⠮⢈⠵⡓⡙⡉⢈⠺⢈⡦⠧⡚⢈⡚⠹⠺⡜⢈⠧⡜⢈⠺⡜⢈⠧⡎⠮⢈⡇⠺⡎⠮⠧⢈⡎⡓⡜⢈⡚⡣⡙⠳⢈⡦⠹⠳⡜⠹⠳⡙⢈⠺⢈⡋⠺⡇⠳⢈⠺⡜⢈⡓⡙⢈⡎⡓⡜⡉⢈⠳⡥⠳⡎⡜⡣⠧⡋⡋⡪⢈⠺⢈⡋⡓⡥⠳⢈⠺⡜⢈⠧⡎⠮⢈⡜⠹⠳⡙⠳⢈⠧⢈⡜⡓⡎⠳⢈⡜⡓⢈⠺⡍⡕⡙⡓⡥⠳⢈⡜⡓⢈⠫⠳⢈⠶⡓⡓⠮⢈⠧⡜⡉⢈⡚⡓⢈⠶⡓⢈⠵⡙⡓⡍⢈⠧⡎⡪⢈⡕⡋⠧⠭⠳⢈⡋⠺⡇⠳⢈⡪⡓⡣⢈⠧⡙⠳⢈⠶⡓⡓⠮⢈⠧⡜⢈⡚⡓⡍⠳⡜⠹⠺⡎⠶⢈⠧⡎⠮⢈⡋⠺⡇⠳⢈⠫⡣⡜⢈⠮⡓⡎⠎⡜⢈⡇⡎⡓⡦⢈⠹⡓⡦⢈⡜⡓⢈⠶⠳⡜⢈⡍⡓⡎⠳⡪⢈⡓⡣⡜⢈⡓⠵⢈⠺⡜⢈⠫⡪⢈⠹⠳⡋⡕⠺⡎⠶⢈⡜⡓⢈⡚⡓⡋⡥⠳⢈⡓⡜⠹⠳⡙⡚⢈⡕⡙⡓⠫⡋⠳⡍⡉⢈⠆⠆⢃⡓⠮⡚⢈⠵⠺⡎⠶⠳⡙⡆⢈⢃⡓⠮⢈⠧⡋⡙⠳⠧⠮⡪⢈⠫⡪⢈⠶⠺⡥⠺⡎⠶⢈⣈⡓⡣⢈⡋⠺⠵⠳⢈⡍⠺⡎⠺⡍⠺⡬⠳⠮⢈⠺⡜⡚⢈⠮⠺⡚⡜⠧⡎⠭⠳⢈⡦⠺⡜⠹⢈⣈⡓⡣⡙⡉⢈⡎⡓⡦⢈⣈⡓⡣⢈⠹⠧⡥⠳⢈⡜⡓⢈⡍⠺⡎⠺⡍⠺⡬⠳⢈⠮⠺⡚⡜⠧⡎⠭⠳⢈⠫⡪⢈⠧⠭⡜⡣⠧⡋⡋⡪⢈⡙⠳⠧⠭⠹⠺⡎⠶⢈⡓⡣⡜⡉⢈⡜⠹⠳⡙⠳⢈⠧⡙⠳⢈⡚⠧⡪⠺⡎⠶⢈⡓⡙⢈⠳⡥⠳⡙⡪⡜⠹⠺⡎⠶⢈⠮⠳⡕⠳⡎⠮⡚⢈⡓⡎⢈⢃⡓⠮⡉⢈⢃⡓⠮⢈⠮⠺⠮⡎⠎⡜⢈⡦⠧⡎⡜⢈⡜⠹⠺⡚⢈⠧⡎⠮⢈⡜⠹⠧⡜⡉⢈⢆⢈⡍⠳⠧⡎⢈⠭⡓⡍⠳⢈⡓⡎⢈⠺⡜⡚⢈⠧⡋⡚⡓⢈⠮⠳⡕⠳⡎⠮⡚⢈⡓⡎⢈⡕⠳⡙⡚⡓⡎⢈⡜⡓⢈⠧⠭⡜⡣⠧⡋⡋⡪⢈⡜⡙⡪⢈⠺⡜⢈⡚⡓⢈⠼⡣⡚⡜⢈⠮⡓⡎⠎⡜⢈⡕⡣⡜⢈⡙⠳⡚⡕⡓⡎⡚⠺⠫⠺⡋⠺⡜⡪⢈⠓⠫⡋⠧⡍⠳⠕⢈⡓⡎⢈⢃⡓⠮⠆⠆⢊⠧⡙⡕⡍⠧⡎⢈⡜⡙⠺⠧⡎⠶⡋⠳⡆⢈⡙⠳⠭⠳⡎⡜⡋⡪⢈⠭⠧⡍⠳⢈⠧⠭⡙⡓⡚⡚⢈⠺⡜⡉⢈⡇⠺⡎⠮⠧⢈⠺⡎⡜⠳⡙⠳⡚⡜⠺⡎⠶⢈⡜⡓⢈⡋⡓⡓⡇⢈⡜⠹⡙⡓⡣⠶⠹⢈⡜⠹⠺⡚⢈⡜⡓⢈⡚⠺⡜⡣⠧⡜⠺⡓⡎⢈⠺⠮⡇⠆⠆⡰⡓⡩⢈⠧⡎⠮⢈⠹⠳⠮⠶⠳⠹⡓⠶⢈⠭⡓⡎⠭⠳⡕⡜⡆⢈⡚⡓⡍⠳⢈⡕⠳⡓⡕⡋⠳⢈⠧⡙⠳⢈⠶⡓⡓⠮⢈⠧⡜⢈⡍⠧⡎⡪⢈⡚⡜⡣⠵⠵⢈⡋⠺⡇⠳⢈⠵⡓⡩⢈⡦⠹⠺⡋⠳⢈⡓⡜⠹⠳⡙⡚⢈⠧⡙⠳⢈⠶⡙⠳⠧⡜⢈⠧⡜⢈⡓⡎⠳⢈⡜⠹⠺⡎⠶
+
+> Manuchehr Qoriev:
+Photo
+
+> Manuchehr Qoriev:
+Photo
+
+> Manuchehr Qoriev:
+Photo
+
+> Manu Talks:
+(Everyone can just read some motivational ahh quotes and boost dopamine for some short period but when You extract lessons from conversation with real life people it hits difirent)
+
+
+M.Q:
+1. Life is fair because it is unfair to everyone.
+2. Don't choose the right choice, make the choice right.
+3. If person doesn't want to help Himself no one else can. 
+4.Sometimes You think we’re being honest/fair/realistic, but when You reflect on our own situation and compare it with others, You realize You are actually being pessimistic. You are far more capable than you think, and you truly deserve it. Try to be realistic, but don't become overly pessimistic by doubting yourself.
+5. Being in a relationship is like an investment: you can grow, stay neutral, or fall. But no matter the outcome, always a lesson should be learned.
+6. Be grateful to everyone who supported You: those who guided, helped, or simply shared their time. Thank you for being part of my journey. Because someone did good for me, I will try strive to do good for others. Even when faced with negativity, choose to absorb, learn, and shine with kindness.
+
+A.L:
+It’s not how many years in your life, but how much life in your years.
+
+V/B:
+Stress doesn't come from hard work. Stress primarily comes form not taking action over something that you can have some control over
+
+
+W.L:
+What counts, I found, is not what you cover, but what you uncover.
+
+E:
+- Working is great but dont forget to rest too
+- Be honest with yourself
+
+Sh:
+- Whatever dark moments you face in life, responding with bitterness isn't the answer  - choose to reflect them with goodness instead."
+
+D.A:
+- When you are young, I think it's very important to risk more. I mean, try many different things, and try to learn as many things as possible. 
+- If you put your goals high, eventhough you do not not get that goal eventually you will be very close/high. So aim higher.
+- If you can do, try to do both: career and family.
+
+
+I.C:
+- Don't judge any situation: just find your weakness and try to fix it
+- Do not be in a harry. Go slowly, but to the goal
+- Keep working, but be calm. Let your result speak.
+- Sweet is only sweet because you have a bitter to compare
+- You use your brain or you loose it.
+- There are no failures there are learning opportunities 
+
+
+
+M.A: 
+- It's all about prioritizing, you should know what you are doing and what YOU really want
+- You should explore yourself more then anything; majority don't themselves: strength and weaknesses; what they truly want
+- Compare Yourself pnly with Your past yourself not with others
+- Diet and work hard like a sportsman. Diet from stuff/people that don't match Your goals
+
+
+
+D:
+- Half of your life works for the name, and the other half of the name works for you
+- Don't run after beer/bitches/idiots when you're young
+
+
+I:
+- Having weakness is not the issue but not knowing your weakness is an issue.
+- The best protection against hackers is learning to think like one.
+
+L.A: 
+- Be careful with Your surrounding people and have a Trustworthy group of people. 
+- Put the goal and go towards it; NO LEFT NO RIGHT, unless You achieve YOUR GOAL. Don't slack off.
+- Go to sleep with a dream, and wake up with a goal.
+- Not everything that you love eating/doing is good/healthy/beneficial. I know You know but sometimes we all forget this.
+
+
+R:
+- You often compare yourself to people who seem ahead of you, forgetting that what you already have is someone else’s dream. That doesn’t mean you shouldn’t work harder. The people ahead of you didn’t do anything impossible to get there; they’re just like you, they simply put in a bit more effort and stayed consistent.
+- Don’t underestimate your value; you’re more capable than you realize.
+
+
+A KH:
+- Don't worry and Do Your best by best I mean really best leave the rest to opportunity
+- Have a mentor/person who could see at your position/decision to give You feedback
+
+
+YouTube: 
+- Good thing takes time
+- Ask for forgiveness not permission
+- Market is not cooked there are just people who are not marketable
+- Dont chase ......
+- Ideas are worthless
+
+> Manu Talks:
+Some useful coding resources and my thoughts about coding / AI stuff
+
+# Part 3
+
+One thing I realized after using AI tools heavily for coding is that the workflow matters more than the model itself.
+
+A lot of people argue about which model is the best: Claude, GPT, Gemini, etc. But in reality, productivity comes from using the right tools together, not just picking the “best” model.
+
+A decent site to see which models are currently strong:
+https://artificialanalysis.ai/leaderboards/models
+
+Benchmarks are not perfect (and often a bit biased), but they give a rough idea of what's strong right now.
+But honestly, don't spend too much time obsessing over leaderboards. What matters more is how you use the tools in practice.
+
+
+
+
+
+My current AI coding setup
+
+Instead of relying on a single IDE or tool, I usually switch between several depending on the task.
+
+Cursor: great for normal AI-assisted coding and debugging.
+
+Windsurf: good when working with larger contexts or structured coding workflows.
+
+Zed + Codex extension: extremely fast editor, nice for quick edits or lightweight generation.
+
+Antigravity: more agent-like. It can run browser sessions, check logs, execute scripts, etc. Pretty interesting for debugging workflows.
+
+Copilot (VSCode): surprisingly improved recently. The big advantage is that premium requests are request-based instead of token-based.
+
+Claude (Opus / Sonnet): still one of the strongest models when you need actual reasoning or complex code changes.
+
+
+
+
+
+
+
+
+Saving tokens by using more tokens
+
+This sounds weird, but sometimes the best way to save tokens is by using more tokens: just in the right places (not just one place but places).
+
+If you force one expensive model to do everything, you'll burn a ridiculous amount of tokens.
+
+Instead it's better to split tasks across tools.
+
+For example:
+Large tasks like: massive refactors, formatting big files, repetitive code changes
+can burn tons of tokens on models like Claude or Cursor.
+But Copilot charges per request, not per token.
+So you can send huge prompts without worrying too much about token cost.
+
+Using each tool for what it’s good at saves both time and money.
++ try generating prompts instead of just dumbing Your questions using broken english; if You dont understand what You wrote AI probably aint gonna understand it :)
+
+
+
+
+
+
+
+About AI agents
+
+There is a lot of hype right now about agentic coding workflows.
+
+The idea is that an AI agent can build software by itself — writing code, running tests, fixing bugs, etc.
+In reality, it's not quite there yet.
+Agents are useful, but they still struggle with a few things.
+
+First problem is context.
+Most agents can't really see your whole codebase at once. Because of that they sometimes break things without realizing it.
+
+Another issue is error loops.
+Sometimes the agent makes a mistake and then keeps trying to fix its own mistake instead of realizing the approach is wrong.
+Long tasks also cause problems because the agent slowly loses earlier context during long runs.
+
+So fully autonomous development is still pretty unreliable.
+
+
+
+
+
+
+
+
+
+
+
+Small safety tip
+If your tool allows it, it's usually a good idea to disable automatic script execution.
+Some AI tools will generate and run scripts automatically, and sometimes they do weird things.
+It's safer to review what they're about to run first.
+
+
+
+
+
+
+
+
+
+
+
+
+Final thought
+
+People constantly argue about whether AI will replace developers.
+
+Personally I think that debate is kind of pointless.
+
+If AI becomes good enough to replace software engineers, then a lot of other knowledge jobs will disappear too.
+
+So worrying about that doesn't really help.
+
+Don't worry just learn how to use these tools well.
+
+Developers who understand:
+prompting
+context engineering
+AI-assisted workflows
+
+will probably have a big advantage over developers who ignore these tools.
+AI still makes mistakes, but when used properly it can massively speed up development.
+
+
+
+
+
+Accurate reel about software engineers (IMO):
+https://www.youtube.com/shorts/XcZtJeIeYaI
+
+
+https://news.ycombinator.com/item?id=47034087
+
+> Manu Talks:
+🖼 Have a great day/ev :)
+Wish You all all the best
+GG
+
+
+(sending without sound; if you hold sending button in tg You can send without send messages; idk maybe will be helpfull for someone; or scheduled messages)
+
+> Manu Talks:
+ Sticker
+
+> Manu Talks:
+ Sticker
+
+> Manu Talks:
+ Sticker

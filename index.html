@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
+<title>Unfair to Everyone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e7; --paper-edge:#efe7d8; --ink:#241f1a; --ink-soft:#6b6055;
+  --rule:#c9bda8; --accent:#8a5a2b; --gutter:#d9cdb8;
+  --page-w:min(42vw,400px); --page-h:min(74vh,660px);
+  --serif:"EB Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme=light]){
+    --paper:#1c1916; --paper-edge:#17140f; --ink:#e6ddcd; --ink-soft:#9c9285;
+    --rule:#3c352c; --accent:#c08a4e; --gutter:#0f0d0a;
+  }
+}
+:root[data-theme=dark]{
+  --paper:#1c1916; --paper-edge:#17140f; --ink:#e6ddcd; --ink-soft:#9c9285;
+  --rule:#3c352c; --accent:#c08a4e; --gutter:#0f0d0a;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--paper-edge); color:var(--ink);
+  font-family:var(--serif);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:14px; padding:18px; overflow:hidden;
+}
+
+/* ---------- the book object ---------- */
+#book{
+  position:relative; display:flex; background:var(--paper); padding:0 40px;
+  border-radius:3px 6px 6px 3px;
+  box-shadow:0 1px 2px rgba(0,0,0,.18),0 18px 44px -12px rgba(0,0,0,.35);
+}
+#book::before{ /* the spine */
+  content:""; position:absolute; left:50%; top:0; bottom:0; width:38px;
+  transform:translateX(-50%); pointer-events:none; z-index:3;
+  background:linear-gradient(90deg,transparent,rgba(0,0,0,.09) 38%,
+    var(--gutter) 50%,rgba(0,0,0,.09) 62%,transparent);
+  opacity:.55;
+}
+#viewport{ overflow:hidden; width:calc(var(--page-w)*2 + 96px); height:var(--page-h); }
+#flow{
+  height:100%;
+  column-width:var(--page-w); column-gap:96px; column-fill:auto;
+  transition:transform .34s cubic-bezier(.4,0,.2,1);
+  padding:38px 0; /* top/bottom page margin */
+  font-size:clamp(15px,1.28vw,17.5px); line-height:1.62;
+  text-align:justify; hyphens:auto; orphans:2; widows:2;
+}
+/* the column box is the page; pad inside it, never outside */
+#flow > section{ break-before:column; }
+#flow > section:first-child{ break-before:auto; }
+
+/* ---------- typography inside a page ---------- */
+#flow p{ margin:0 0 .62em; text-indent:1.2em; }
+#flow p:first-of-type,
+#flow h1+p,#flow h2+p,#flow h3+p,#flow blockquote+p,#flow hr+p{ text-indent:0; }
+#flow h1,#flow h2,#flow h3{ font-weight:500; break-after:avoid; }
+#flow h2{
+  font-size:1.5em; line-height:1.2; margin:0 0 .1em; letter-spacing:.01em;
+}
+#flow h3{
+  font-family:var(--sans); font-size:.66em; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink-soft); font-weight:500;
+  margin:1.5em 0 .5em;
+}
+#flow h2+h3{ margin-top:.2em }
+#flow blockquote{
+  margin:1.1em 0; padding-left:.95em; border-left:2px solid var(--rule);
+  font-style:italic; color:var(--ink);
+}
+#flow blockquote p{ text-indent:0; margin:0 0 .55em }
+#flow blockquote p:last-of-type{ margin-bottom:0 }
+#flow cite{
+  display:block; break-before:avoid; margin-top:.35em; font-style:normal; font-family:var(--sans);
+  font-size:.68em; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--ink-soft);
+}
+#flow ul,#flow ol{ margin:.5em 0 .8em; padding-left:1.3em }
+#flow li{ margin-bottom:.32em }
+#flow hr.rule{
+  border:0; height:1px; background:var(--rule); width:34%;
+  margin:1.6em auto; opacity:.7;
+}
+#flow a{ color:var(--accent) }
+.slot{
+  font-family:var(--sans); font-size:.78em; font-style:normal;
+  color:var(--accent); border-bottom:1px dotted var(--accent);
+  padding:0 .12em; opacity:.85;
+}
+
+/* ---------- special sections ---------- */
+.title-page{ text-align:center; display:flex; flex-direction:column;
+  justify-content:center; height:100%; }
+.title-page h1{ font-size:2.5em; line-height:1.08; margin:0 0 .12em;
+  letter-spacing:-.01em; }
+.title-page h3{ margin:.6em 0 }
+.title-page p{ text-indent:0; text-align:center; color:var(--ink-soft);
+  font-size:.92em }
+.part-page{ text-align:center; display:flex; flex-direction:column;
+  justify-content:center; height:100%; }
+.part-page h1{ font-family:var(--sans); font-size:.72em; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--ink-soft); font-weight:500;
+  margin:0 0 1.1em }
+.part-page h2{ font-size:2.1em; margin:0 0 .5em }
+.part-page p{ text-indent:0; text-align:center; font-style:italic;
+  color:var(--ink-soft) }
+
+/* ---------- chrome ---------- */
+#bar{
+  display:flex; align-items:center; gap:16px; font-family:var(--sans);
+  font-size:12px; color:var(--ink-soft); letter-spacing:.04em;
+}
+#bar button{
+  font:inherit; color:inherit; background:none; border:1px solid var(--rule);
+  border-radius:4px; padding:4px 11px; cursor:pointer;
+}
+#bar button:hover{ color:var(--ink); border-color:var(--ink-soft) }
+#bar button:disabled{ opacity:.3; cursor:default }
+#folio{ min-width:96px; text-align:center; font-variant-numeric:tabular-nums }
+#hint{ font-family:var(--sans); font-size:11px; color:var(--ink-soft);
+  opacity:.6; letter-spacing:.05em }
+@media (max-width:720px){
+  :root{ --page-w:min(86vw,420px); --page-h:min(70vh,620px) }
+  #viewport{ width:var(--page-w) }
+  #book{ padding:0 22px }
+  #flow{ column-gap:0; text-align:left; hyphens:none }
+  #book::before{ display:none }
+}
+</style>
+</head>
+<body>
+
+<div id="book">
+  <div id="viewport"><div id="flow">
+<section class="title-page" data-src="00-title.md">
+<h1>Unfair to Everyone</h1>
+<h3>A life, and what it taught</h3>
+<p>Manuchehr Qoriev</p>
+<hr class="rule">
+<p><em>I share thoughts and information here. If someone chooses to blindly follow whatever they hear or read, that is not on the person who shared it. At that point, it is natural selection.</em></p>
+<p><span class="slot">working title: taken from saying 1. Replace it if you have a better one.</span></p>
+</section>
+
+<section class="part-page" data-src="01-part-one.md">
+<h1>Part One</h1>
+<h2>The Life</h2>
+<p><em>The turning points, in the order they happened.</em></p>
+<p>Not a year-by-year account. A life is not its calendar. It is the small number of moments where the road actually forked, and everything after looked different because of which way you went.</p>
+<p>Every chapter that follows is one of those forks.</p>
+</section>
+
+<section class="chapter" data-src="key-points.md">
+<h2>Nothing here yet</h2>
+<h3><span class="slot">year</span></h3>
+<p>Part One is empty. Nothing about the turning points of your life is written down in the vault, so nothing could be extracted for it: `Me/Book.md` has the structure and one row of `&lt;fill&gt;`, and `Me/_memory-digest.md` is 34KB of purely technical repository knowledge.</p>
+<p>Part Two exists because `sayings.txt` existed. Part One will exist when this file does.</p>
+<h3>Where to start</h3>
+<p>Not at birth. Start with the fork you can see most clearly from here, wherever it sits in time, and write that one first. Order can be fixed later by moving headings around in this file.</p>
+<p>From the facts already on record in the vault, these are candidates, and only you know which were actually forks and which were just events:</p>
+<ul><li>Tajikistan, and the passport that constrains every option since <span class="slot">when this stopped being background and became a fact you had to plan around</span></li><li>University of Central Asia, B.Sc. Computer Science, 2022 to 2027 <span class="slot">why CS, and why there</span></li><li>AGENTS.inc, remote, from June 2025, year 3 of a 5 year degree <span class="slot">how working full time while studying changed things</span></li><li>OmniLadders: building the thing that solves the exact problem your own passport creates <span class="slot">when you saw that connection</span></li><li><span class="slot">whatever is not on this list, which is probably the most important one, because none of the above came from you</span></li></ul>
+</section>
+
+<section class="part-page" data-src="02-part-two.md">
+<h1>Part Two</h1>
+<h2>The Lessons</h2>
+<p><em>Nine chapters. Each one stands on its own.</em></p>
+<p>Everyone can read motivational quotes and feel something for an hour. When you take a lesson out of a conversation with a real person, it lands differently. Everything in this part came from a real person, and most of them are still alive and still would not think of themselves as teachers.</p>
+<p>The initials are theirs. The mistakes in understanding them are mine.</p>
+</section>
+
+<section class="chapter" data-src="03-unfair.md">
+<h2>Unfair to Everyone</h2>
+<h3>Chapter One</h3>
+<blockquote><p>Life is fair because it is unfair to everyone.</p><cite>M.Q.</cite></blockquote>
+<p>People say life is not fair as though that were the end of the sentence. It is not the end of the sentence. It is the beginning of one. Life is not unfair to you specifically. It is not running a campaign against you. It is unfair to the person you envy, in a way you cannot see from where you are standing, and it was unfair to the person they envy, and so on up a ladder that has no top.</p>
+<p>Once you actually believe that, the question changes. It stops being <em>why me</em> and becomes <em>what do I do with this particular unfairness</em>. The first question has no answer. The second one always does.</p>
+<blockquote><p>You often compare yourself to people who seem ahead of you, forgetting that what you already have is someone else&#x27;s dream. That does not mean you should not work harder. The people ahead of you did not do anything impossible to get there. They are just like you. They simply put in a bit more effort and stayed consistent.</p><cite>R.</cite></blockquote>
+<p>There is a trap on the other side of this, and it is the more dangerous one, because it disguises itself as maturity.</p>
+<blockquote><p>Sometimes you think you are being honest, fair, realistic. But when you reflect on your own situation and compare it with others, you realise you are actually being pessimistic. You are far more capable than you think, and you truly deserve it. Try to be realistic, but do not become overly pessimistic by doubting yourself.</p><cite>M.Q.</cite></blockquote>
+<p>Pessimism is the cheapest way to sound serious. It costs nothing, it is never embarrassed, and it is wrong roughly as often as optimism is. The difference is that optimism occasionally gets you into the room.</p>
+<p>Realism is not the midpoint between hope and despair. Realism is looking at what is actually true, including the parts that are true in your favour, and most people auditing themselves quietly skip that column.</p>
+<p><span class="slot">anchor: which turning point in Part One taught this. Add it to key-points.md.</span></p>
+</section>
+
+<section class="chapter" data-src="04-choosing.md">
+<h2>Make the Choice Right</h2>
+<h3>Chapter Two</h3>
+<blockquote><p>Do not choose the right choice. Make the choice right.</p><cite>M.Q.</cite></blockquote>
+<p>Most of the anguish around a decision is spent before it, not after. People build a model in which one of the doors is correct and the others are mistakes, and then they stand in the hallway, sometimes for years, trying to identify the correct door from the outside.</p>
+<p>The model is wrong. There is very rarely a correct door. There is a door you walk through and then spend the next several years making correct, and there are doors you did not walk through, which stay perfect forever precisely because you never tested them.</p>
+<p>This is not an argument for carelessness. It is an argument about where the work is. The work is not in the choosing. The work is on the other side.</p>
+<blockquote><p>When you are young, I think it is very important to risk more. Try many different things, and try to learn as many things as possible.</p><p>If you put your goals high, even though you do not reach that goal, you will end up very close to it. So aim higher.</p><cite>D.A.</cite></blockquote>
+<p>Aiming higher is not motivational decoration. It is arithmetic about where you land when you miss, and you will miss.</p>
+<p>And once the door is chosen, the discipline reverses completely.</p>
+<blockquote><p>Put the goal and go towards it. No left, no right, until you achieve your goal. Do not slack off.</p><cite>L.A.</cite></blockquote>
+<p>Two different modes, and using the wrong one at the wrong time is how people waste a decade. Before the decision: try everything, risk more, look in every direction. After it: no left, no right. The people who suffer most are the ones who are cautious before choosing and distractible after.</p>
+<p>Two more, from nobody in particular and everybody in general, that belong here:</p>
+<blockquote><p>Ask for forgiveness, not permission.</p><p>Ideas are worthless.</p></blockquote>
+<p>The second one is not cynicism. It is a statement about which side of the door value lives on.</p>
+<p><span class="slot">anchor: the decision in Part One where you stopped looking for the right door.</span></p>
+</section>
+
+<section class="chapter" data-src="05-knowing-yourself.md">
+<h2>The Weakness You Cannot Name</h2>
+<h3>Chapter Three</h3>
+<blockquote><p>Having a weakness is not the issue. Not knowing your weakness is the issue.</p><cite>I.</cite></blockquote>
+<p>Everyone has a list of things they are bad at. Almost nobody has written it down, and the difference between those two states is enormous. An unwritten weakness does not stay still. It moves around, shows up disguised as bad luck, as a difficult colleague, as a market condition, as a bad week that keeps happening.</p>
+<p>A named weakness is just a task.</p>
+<blockquote><p>Do not judge any situation. Just find your weakness and try to fix it.</p><p>You use your brain or you lose it.</p><cite>I.C.</cite></blockquote>
+<p>Not judging the situation is the hard half. The instinct when something goes wrong is to run a trial: whose fault, what was unfair, what should have happened. All of that feels like analysis and none of it is. The only question that produces a next action is: what in me made this outcome possible, and what do I do about it.</p>
+<blockquote><p>You should explore yourself more than anything. The majority do not know themselves: their strengths, their weaknesses, what they truly want.</p><p>Compare yourself only with your past self, not with others.</p><cite>M.A.</cite></blockquote>
+<p>The second line is the measuring instrument for the first. Comparison with other people is noise, because you are comparing your inside to their outside, and the two are not the same kind of thing. Comparison with your own past self is the only measurement where you actually have both readings.</p>
+<blockquote><p>Be honest with yourself.</p><cite>E.</cite></blockquote>
+<p>Three words, and the hardest instruction in this book. Self honesty has no external enforcement. Nobody catches you. There is no test that fails.</p>
+<p>There is one more line here, from a security engineer, that generalises much further than it was meant to:</p>
+<blockquote><p>The best protection against hackers is learning to think like one.</p><cite>I.</cite></blockquote>
+<p>The same is true of yourself. The most reliable defence against your own worst tendencies is being able to run them in simulation, on purpose, before they run themselves.</p>
+<p><span class="slot">anchor: when you first saw a weakness of yours clearly. Part One.</span></p>
+</section>
+
+<section class="chapter" data-src="06-patience.md">
+<h2>Slowly, But To the Goal</h2>
+<h3>Chapter Four</h3>
+<blockquote><p>Do not be in a hurry. Go slowly, but to the goal.</p><p>Keep working, but be calm. Let your result speak.</p><cite>I.C.</cite></blockquote>
+<p>Speed and direction are independent. This is obvious in physics and almost nobody applies it to their own life. Enormous energy gets spent going quickly in a direction that was never checked, and the people doing it feel productive the entire time, because effort feels like progress from the inside.</p>
+<p>Going slowly to the goal beats going quickly to nowhere, and it is not close.</p>
+<blockquote><p>Good things take time.</p></blockquote>
+<blockquote><p>Stress does not come from hard work. Stress primarily comes from not taking action over something you can have some control over.</p><cite>V/B.</cite></blockquote>
+<p>Read that second one twice. It reassigns blame for a feeling almost everyone misattributes. Exhaustion comes from work. Stress comes from the gap between what you could act on and what you have acted on. Which means the cure for stress is almost never rest. It is usually one specific action you have been avoiding, and you already know which one.</p>
+<blockquote><p>Do not worry, and do your best. By best I mean really best. Leave the rest to opportunity.</p><cite>A.KH.</cite></blockquote>
+<p>The split matters. Your best is fully yours. Opportunity is fully not yours. Anxiety is what happens when you try to take responsibility for the second category, and it does not work, and you keep trying.</p>
+<blockquote><p>Let your result speak.</p><cite>I.C.</cite></blockquote>
+<p>There is a version of ambition that is loud and a version that is quiet, and they look identical for the first two years. After that they stop looking identical.</p>
+<blockquote><p>What counts, I found, is not what you cover, but what you uncover.</p><cite>W.L.</cite></blockquote>
+<p>Coverage is how much ground you crossed. Uncovering is how much of it you actually saw. A course finished, a book read to the last page, a repository scrolled through: all coverage, all worth close to nothing on their own. The one idea you found and cannot now stop seeing everywhere is the entire return.</p>
+<p><span class="slot">anchor: a stretch in Part One where slow work paid and fast work did not.</span></p>
+</section>
+
+<section class="chapter" data-src="07-people.md">
+<h2>The People In the Room</h2>
+<h3>Chapter Five</h3>
+<blockquote><p>Be careful with the people around you, and have a trustworthy group of people.</p><cite>L.A.</cite></blockquote>
+<p>You do not have a personality so much as an average, and the things being averaged are mostly sitting near you. This is not a metaphor about influence. It is closer to a mechanical fact. Standards, vocabulary, what counts as normal effort, what counts as an acceptable excuse: all of it is set locally, by the five or six people you actually talk to, and almost none of it is set by you deciding.</p>
+<p>Which makes choosing those people one of the highest leverage decisions available, and one almost nobody makes deliberately.</p>
+<blockquote><p>Have a mentor, or a person who can see your position and your decision from outside, and give you feedback.</p><cite>A.KH.</cite></blockquote>
+<p>The value is not the advice. The value is the vantage point. You cannot see your own position from inside your own position, and no amount of intelligence fixes that. It is a geometry problem, not an ability problem.</p>
+<blockquote><p>Being in a relationship is like an investment. You can grow, stay neutral, or fall. But no matter the outcome, a lesson should always be learned.</p><cite>M.Q.</cite></blockquote>
+<p>There is a hard limit on all of this, and it is worth stating plainly because a lot of good energy dies against it:</p>
+<blockquote><p>If a person does not want to help himself, no one else can.</p><cite>M.Q.</cite></blockquote>
+<p>Not <em>will not</em>. Cannot. This is not permission to stop caring about people. It is the boundary of what caring can accomplish, and knowing where that boundary sits is what lets you keep caring for decades instead of burning out in two years and deciding people are not worth it.</p>
+<p>And then the debt, which is the part most people skip:</p>
+<blockquote><p>Be grateful to everyone who supported you: those who guided, helped, or simply shared their time. Thank you for being part of my journey. Because someone did good for me, I will strive to do good for others. Even when faced with negativity, choose to absorb, learn, and shine with kindness.</p><cite>M.Q.</cite></blockquote>
+<p>This book exists because of the initials at the bottom of these quotes. None of them were writing a book. They were talking.</p>
+<p><span class="slot">anchor: the person in Part One who changed your direction. Name them.</span></p>
+</section>
+
+<section class="chapter" data-src="08-discipline.md">
+<h2>Diet From What Does Not Match</h2>
+<h3>Chapter Six</h3>
+<blockquote><p>Diet and work hard like a sportsman. Diet from stuff and people that do not match your goals.</p><cite>M.A.</cite></blockquote>
+<p>The word diet is doing something unusual here. A diet is not primarily about adding. It is a rule about subtraction, applied continuously, to things you would otherwise consume by default. Extending it past food is the whole insight: the same operation works on commitments, on inputs, on people, on open tabs.</p>
+<p>Most people try to reach their goals by addition only. More effort, more projects, more hours, more contacts. Addition has a ceiling and it arrives fast, because the day does not get longer. Subtraction has no ceiling.</p>
+<blockquote><p>Not everything you love eating or doing is good, healthy or beneficial. I know you know this, but sometimes we all forget it.</p><cite>L.A.</cite></blockquote>
+<p>The parenthetical is the important part. <em>I know you know.</em> Almost nothing in this chapter is new information to anyone. The failure is never a failure of knowledge. It is a failure of the gap between knowing and the specific Tuesday evening where the knowing is not present in the room.</p>
+<blockquote><p>Working is great, but do not forget to rest too.</p><cite>E.</cite></blockquote>
+<p>Rest is not the opposite of the discipline in this chapter. It is inside it. An athlete who does not sleep is not more disciplined than one who does, they are worse at the same job. Treating recovery as the thing you cut first is the most common way that hard working people quietly become unproductive while feeling maximally virtuous about it.</p>
+<blockquote><p>Do not run after beer, women and idiots when you are young.</p><cite>D.</cite></blockquote>
+<p>Blunt, and the bluntness is the point. It is the same subtraction rule with the abstraction removed, said by someone who was not trying to be quotable.</p>
+<p><span class="slot">anchor: what you cut, and when. Part One.</span></p>
+</section>
+
+<section class="chapter" data-src="09-failure.md">
+<h2>There Are No Failures</h2>
+<h3>Chapter Seven</h3>
+<blockquote><p>There are no failures. There are learning opportunities.</p><cite>I.C.</cite></blockquote>
+<p>This one is close to a cliché, and it survives being a cliché because of what it actually asks you to do, which is difficult and specific: extract the lesson <em>while the loss is still fresh</em>, not years later when it has been smoothed into an anecdote.</p>
+<p>The extraction has a deadline. A failure you did not examine within a reasonable window does not sit there patiently waiting to teach you. It converts into a story about yourself, and stories about yourself are very hard to revise.</p>
+<blockquote><p>Sweet is only sweet because you have bitter to compare it with.</p><cite>I.C.</cite></blockquote>
+<p>Not consolation. Structure. The scale requires both ends to exist or it does not measure anything. A life engineered to remove every bitter reading would not become uniformly sweet, it would become flat, and flat is not the good outcome people imagine when they are avoiding difficulty.</p>
+<blockquote><p>Whatever dark moments you face in life, responding with bitterness is not the answer. Choose to reflect them with goodness instead.</p><cite>Sh.</cite></blockquote>
+<p>This is the hardest instruction in the book and I want to be honest about why, rather than presenting it as easy wisdom.</p>
+<p>Bitterness is <em>earned</em>. That is what makes it so difficult to put down. When someone has actually wronged you, bitterness feels like the accurate response, the honest one, the one that respects what happened. Choosing goodness instead can feel like lying about the severity.</p>
+<p>It is not. It is a decision about direction, not about the facts. The facts stay exactly as bad as they were. What changes is whether the damage terminates with you or continues through you into everyone downstream.</p>
+<blockquote><p>Even when faced with negativity, choose to absorb, learn, and shine with kindness.</p><cite>M.Q.</cite></blockquote>
+<p>Absorb, learn, shine. In that order, and the middle step is the one people drop. Absorbing without learning is just taking damage. Shining without absorbing is performance.</p>
+<p><span class="slot">anchor: the loss in Part One you refused to turn into bitterness.</span></p>
+</section>
+
+<section class="chapter" data-src="10-name-and-time.md">
+<h2>Half Your Life Works For the Name</h2>
+<h3>Chapter Eight</h3>
+<blockquote><p>Half of your life works for the name, and the other half the name works for you.</p><cite>D.</cite></blockquote>
+<p>There is a point, somewhere in the middle, where the direction of effort reverses. Before it, everything you do is deposited: no interest, no visibility, frequently no acknowledgement. After it, the accumulated thing starts producing on its own. Doors open before you knock. People vouch for you in rooms you were never in.</p>
+<p>The difficulty is that the curve is invisible from the first half. Someone four years into building something and seeing nothing return has exactly the same view as someone four years into building the wrong thing. The data looks identical. Only time separates them.</p>
+<p>Which is why the earlier chapters matter more than this one. Direction is checkable now. Return is not.</p>
+<blockquote><p>It is not how many years in your life, but how much life in your years.</p><cite>A.L.</cite></blockquote>
+<p>Duration is not the variable. Almost nobody optimising their life is actually optimising duration, though many people believe they are, and it distorts everything downstream: the job held for safety, the decision deferred for another year, the risk not taken at the exact age when risk is cheapest.</p>
+<blockquote><p>Go to sleep with a dream, and wake up with a goal.</p><cite>L.A.</cite></blockquote>
+<p>A dream is a direction with no coordinates. A goal is a coordinate with a date. You need both and they operate at different times of day, and the translation between them happens overnight, every night, and that is the entire practice.</p>
+<p><span class="slot">anchor: the point in Part One where you started depositing. Part One.</span></p>
+</section>
+
+<section class="chapter" data-src="11-tools.md">
+<h2>The Tools Are Not the Work</h2>
+<h3>Chapter Nine</h3>
+<p>The rest of this book would be the same book in 1995. This chapter would not. Everything in it is about a set of tools that arrived very fast, and it is written down partly because it is useful now and partly because it will be a record of what this period actually felt like from inside it.</p>
+<h3>On choosing a language</h3>
+<p>At the start of your career, choosing the <em>best</em> programming language and debating what is best is not worth it. Doing that is how you spend time not learning to code. Changing later is not hard, as long as you pick something in the top fifteen and not Assembly. Pick one based on what you want to build, and go.</p>
+<p>Learn the beginner material once, then learn by building projects. Project based learning wins. Courses are fine if they work for you.</p>
+<h3>On models and workflow</h3>
+<p>One thing I realised after using AI tools heavily is that <strong>the workflow matters more than the model</strong>. People argue about which model is best. In practice, productivity comes from using the right tools together, not from picking a winner. Benchmarks are not accurate but they give a rough sense of what is strong right now. Do not obsess over leaderboards.</p>
+<p>Sometimes the best way to save tokens is to spend more of them, in the right places. Force one expensive model to do everything and you burn an absurd amount for no gain. Split the work: large mechanical tasks, big refactors, repetitive edits, formatting, all of it goes to whatever tool charges per request instead of per token. Reasoning and complex change goes to the strongest model you have. Using each tool for what it is good at saves both time and money.</p>
+<p>And write the prompt properly. If you do not understand what you wrote, the model is not going to either.</p>
+<h3>On agents, honestly</h3>
+<p>There is a lot of hype about agents building software by themselves. It is not there yet, and the failure modes are specific.</p>
+<ul><li><strong>Context.</strong> Most agents cannot see the whole codebase at once, so they</li></ul>
+<p>break things without noticing.</p>
+<ul><li><strong>Error loops.</strong> The agent makes a mistake, then keeps fixing its own</li></ul>
+<p>mistake instead of recognising the approach is wrong.</p>
+<ul><li><strong>Long runs.</strong> Context from the start of a task quietly decays by the end.</li></ul>
+<p>If your tool allows it, disable automatic script execution. Review what is about to run.</p>
+<h3>The argument not worth having</h3>
+<p>People argue endlessly about whether AI will replace developers. If it gets good enough to replace software engineers, most other knowledge work goes too, so worrying about it specifically does not help.</p>
+<p>Do not worry. Learn to use the tools well. Developers who understand prompting, context engineering and AI assisted workflows will have a large advantage over developers who ignore all of it. The tools still make mistakes. Used properly they are an enormous multiplier.</p>
+<p>The lesson underneath is the same one as Chapter Four: coverage versus uncovering. Knowing every tool is coverage. Knowing which one to reach for, and why, is the other thing.</p>
+</section>
+
+<section class="part-page" data-src="12-part-three.md">
+<h1>Part Three</h1>
+<h2>The Open Ending</h2>
+<p><em>This part is not written yet, and it will not be a chapter.</em></p>
+<p>The book does not close on a page. It closes on a choice: several possible paths forward, each one asking the reader to actually do something with what they just read, and an answer that comes back grounded in Part Two.</p>
+<p>Whichever path is chosen, it resolves to one thing. <span class="slot">that one thing is the real thesis of this book. Everything above exists to earn it, and it is not decided yet.</span></p>
+<p>See `Me/Book.md` in the vault for the full design, and the README of this repository for what is still open.</p>
+</section>
+
+<section class="chapter" data-src="90-sayings.md">
+<h2>The Sayings</h2>
+<h3>Appendix</h3>
+<p>Every line the nine chapters were built from, kept whole and unedited, in the order they were first written down. Nine chapters is an interpretation. This is the source.</p>
+<h3>M.Q.</h3>
+<ol><li>Life is fair because it is unfair to everyone.</li><li>Do not choose the right choice, make the choice right.</li><li>If a person does not want to help himself, no one else can.</li><li>Sometimes you think you are being honest, fair, realistic, but when you reflect on your own situation and compare it with others, you realise you are actually being pessimistic. You are far more capable than you think, and you truly deserve it. Try to be realistic, but do not become overly pessimistic by doubting yourself.</li><li>Being in a relationship is like an investment: you can grow, stay neutral, or fall. But no matter the outcome, a lesson should always be learned.</li><li>Be grateful to everyone who supported you: those who guided, helped, or simply shared their time. Thank you for being part of my journey. Because someone did good for me, I will strive to do good for others. Even when faced with negativity, choose to absorb, learn, and shine with kindness.</li></ol>
+<h3>A.L.</h3>
+<ul><li>It is not how many years in your life, but how much life in your years.</li></ul>
+<h3>V/B.</h3>
+<ul><li>Stress does not come from hard work. Stress primarily comes from not taking action over something you can have some control over.</li></ul>
+<h3>W.L.</h3>
+<ul><li>What counts, I found, is not what you cover, but what you uncover.</li></ul>
+<h3>E.</h3>
+<ul><li>Working is great, but do not forget to rest too.</li><li>Be honest with yourself.</li></ul>
+<h3>Sh.</h3>
+<ul><li>Whatever dark moments you face in life, responding with bitterness is not the answer. Choose to reflect them with goodness instead.</li></ul>
+<h3>D.A.</h3>
+<ul><li>When you are young, I think it is very important to risk more. Try many different things, and try to learn as many things as possible.</li><li>If you put your goals high, even though you do not reach that goal, eventually you will be very close to it. So aim higher.</li><li>If you can, try to do both: career and family.</li></ul>
+<h3>I.C.</h3>
+<ul><li>Do not judge any situation. Just find your weakness and try to fix it.</li><li>Do not be in a hurry. Go slowly, but to the goal.</li><li>Keep working, but be calm. Let your result speak.</li><li>Sweet is only sweet because you have bitter to compare it with.</li><li>You use your brain or you lose it.</li><li>There are no failures, there are learning opportunities.</li></ul>
+<h3>M.A.</h3>
+<ul><li>It is all about prioritising. You should know what you are doing and what you really want.</li><li>You should explore yourself more than anything. The majority do not know themselves: their strengths and weaknesses, what they truly want.</li><li>Compare yourself only with your past self, not with others.</li><li>Diet and work hard like a sportsman. Diet from stuff and people that do not match your goals.</li></ul>
+<h3>D.</h3>
+<ul><li>Half of your life works for the name, and the other half the name works for you.</li><li>Do not run after beer, women and idiots when you are young.</li></ul>
+<h3>I.</h3>
+<ul><li>Having a weakness is not the issue, but not knowing your weakness is an issue.</li><li>The best protection against hackers is learning to think like one.</li></ul>
+<h3>L.A.</h3>
+<ul><li>Be careful with the people around you, and have a trustworthy group of people.</li><li>Put the goal and go towards it. No left, no right, until you achieve your goal. Do not slack off.</li><li>Go to sleep with a dream, and wake up with a goal.</li><li>Not everything that you love eating or doing is good, healthy or beneficial. I know you know this, but sometimes we all forget it.</li></ul>
+<h3>R.</h3>
+<ul><li>You often compare yourself to people who seem ahead of you, forgetting that what you already have is someone else&#x27;s dream. That does not mean you should not work harder. The people ahead of you did not do anything impossible to get there. They are just like you, they simply put in a bit more effort and stayed consistent.</li><li>Do not underestimate your value. You are more capable than you realise.</li></ul>
+<h3>A.KH.</h3>
+<ul><li>Do not worry and do your best. By best I mean really best. Leave the rest to opportunity.</li><li>Have a mentor, or a person who can see your position and your decision from outside, and give you feedback.</li></ul>
+<h3>Overheard</h3>
+<ul><li>Good things take time.</li><li>Ask for forgiveness, not permission.</li><li>The market is not cooked, there are just people who are not marketable.</li><li>Ideas are worthless.</li></ul>
+<hr class="rule">
+<p><em>Everyone can read some motivational quotes and boost dopamine for a short period. But when you extract lessons from conversations with real people, it hits different.</em></p>
+</section>
+  </div></div>
+</div>
+
+<div id="bar">
+  <button id="prev" aria-label="Previous page">&larr;</button>
+  <span id="folio">&nbsp;</span>
+  <button id="next" aria-label="Next page">&rarr;</button>
+</div>
+<div id="hint">arrow keys, or click a page edge</div>
+
+<script>
+(function(){
+  var flow=document.getElementById('flow'), vp=document.getElementById('viewport');
+  var folio=document.getElementById('folio');
+  var prev=document.getElementById('prev'), next=document.getElementById('next');
+  var spread=0, spreads=1, perSpread=2, step=0;
+
+  function measure(){
+    // one column + its gap = one page's horizontal stride
+    var cs=getComputedStyle(flow);
+    var colW=parseFloat(cs.columnWidth), gap=parseFloat(cs.columnGap)||0;
+    if(!colW||isNaN(colW)) colW=vp.clientWidth;
+    perSpread = vp.clientWidth > colW*1.5 ? 2 : 1;
+    step = (colW+gap)*perSpread;
+    // scrollWidth includes the overflow columns CSS generated for us
+    var total=Math.max(flow.scrollWidth, vp.clientWidth);
+    var pages=Math.max(1, Math.round((total+gap)/(colW+gap)));
+    spreads=Math.max(1, Math.ceil(pages/perSpread));
+    if(spread>=spreads) spread=spreads-1;
+    paint();
+  }
+  function paint(){
+    flow.style.transform='translateX('+(-spread*step)+'px)';
+    var a=spread*perSpread+1, b=Math.min(a+perSpread-1, spreads*perSpread);
+    folio.textContent = (perSpread===2 && b>a ? a+' to '+b : a)
+                      + ' / ' + spreads*perSpread;
+    prev.disabled = spread===0;
+    next.disabled = spread>=spreads-1;
+  }
+  function go(d){
+    var n=spread+d;
+    if(n<0||n>=spreads) return;
+    spread=n; paint();
+  }
+
+  prev.onclick=function(){go(-1)}; next.onclick=function(){go(1)};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1)}
+    if(e.key==='Home'){spread=0;paint()}
+    if(e.key==='End'){spread=spreads-1;paint()}
+  });
+  vp.addEventListener('click',function(e){
+    go(e.clientX < vp.getBoundingClientRect().left+vp.clientWidth/2 ? -1 : 1);
+  });
+  var x0=null;
+  vp.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  vp.addEventListener('touchend',function(e){
+    if(x0===null) return;
+    var dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(Math.abs(dx)>44) go(dx<0?1:-1);
+  },{passive:true});
+
+  var t; addEventListener('resize',function(){clearTimeout(t);t=setTimeout(measure,120)});
+  // fonts change metrics, so re-measure once they land
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure);
+  measure();
+})();
+</script>
+</body>
+</html>

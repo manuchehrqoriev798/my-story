@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
+<title>Unfair to Everyone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e7; --paper-edge:#efe7d8; --ink:#241f1a; --ink-soft:#6b6055;
+  --rule:#c9bda8; --accent:#8a5a2b; --gutter:#d9cdb8;
+  --page-w:min(42vw,400px); --page-h:min(74vh,660px);
+  --serif:"EB Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme=light]){
+    --paper:#1c1916; --paper-edge:#17140f; --ink:#e6ddcd; --ink-soft:#9c9285;
+    --rule:#3c352c; --accent:#c08a4e; --gutter:#0f0d0a;
+  }
+}
+:root[data-theme=dark]{
+  --paper:#1c1916; --paper-edge:#17140f; --ink:#e6ddcd; --ink-soft:#9c9285;
+  --rule:#3c352c; --accent:#c08a4e; --gutter:#0f0d0a;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--paper-edge); color:var(--ink);
+  font-family:var(--serif);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:14px; padding:18px; overflow:hidden;
+}
+
+/* ---------- the book object ---------- */
+#book{
+  position:relative; display:flex; background:var(--paper); padding:0 40px;
+  border-radius:3px 6px 6px 3px;
+  box-shadow:0 1px 2px rgba(0,0,0,.18),0 18px 44px -12px rgba(0,0,0,.35);
+}
+#book::before{ /* the spine */
+  content:""; position:absolute; left:50%; top:0; bottom:0; width:38px;
+  transform:translateX(-50%); pointer-events:none; z-index:3;
+  background:linear-gradient(90deg,transparent,rgba(0,0,0,.09) 38%,
+    var(--gutter) 50%,rgba(0,0,0,.09) 62%,transparent);
+  opacity:.55;
+}
+#viewport{ overflow:hidden; width:calc(var(--page-w)*2 + 96px); height:var(--page-h); }
+#flow{
+  height:100%;
+  column-width:var(--page-w); column-gap:96px; column-fill:auto;
+  transition:transform .34s cubic-bezier(.4,0,.2,1);
+  padding:38px 0; /* top/bottom page margin */
+  font-size:clamp(15px,1.28vw,17.5px); line-height:1.62;
+  text-align:justify; hyphens:auto; orphans:2; widows:2;
+}
+/* the column box is the page; pad inside it, never outside */
+#flow > section{ break-before:column; }
+#flow > section:first-child{ break-before:auto; }
+
+/* ---------- typography inside a page ---------- */
+#flow p{ margin:0 0 .62em; text-indent:1.2em; }
+#flow p:first-of-type,
+#flow h1+p,#flow h2+p,#flow h3+p,#flow blockquote+p,#flow hr+p{ text-indent:0; }
+#flow h1,#flow h2,#flow h3{ font-weight:500; break-after:avoid; }
+#flow h2{
+  font-size:1.5em; line-height:1.2; margin:0 0 .1em; letter-spacing:.01em;
+}
+#flow h3{
+  font-family:var(--sans); font-size:.66em; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--ink-soft); font-weight:500;
+  margin:1.5em 0 .5em;
+}
+#flow h2+h3{ margin-top:.2em }
+#flow blockquote{
+  margin:1.1em 0; padding-left:.95em; border-left:2px solid var(--rule);
+  font-style:italic; color:var(--ink);
+}
+#flow blockquote p{ text-indent:0; margin:0 0 .55em }
+#flow blockquote p:last-of-type{ margin-bottom:0 }
+#flow cite{
+  display:block; break-before:avoid; margin-top:.35em; font-style:normal; font-family:var(--sans);
+  font-size:.68em; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--ink-soft);
+}
+#flow ul,#flow ol{ margin:.5em 0 .8em; padding-left:1.3em }
+#flow li{ margin-bottom:.32em }
+#flow hr.rule{
+  border:0; height:1px; background:var(--rule); width:34%;
+  margin:1.6em auto; opacity:.7;
+}
+#flow a{ color:var(--accent) }
+.slot{
+  font-family:var(--sans); font-size:.78em; font-style:normal;
+  color:var(--accent); border-bottom:1px dotted var(--accent);
+  padding:0 .12em; opacity:.85;
+}
+
+/* ---------- special sections ---------- */
+.title-page{ text-align:center; display:flex; flex-direction:column;
+  justify-content:center; height:100%; }
+.title-page h1{ font-size:2.5em; line-height:1.08; margin:0 0 .12em;
+  letter-spacing:-.01em; }
+.title-page h3{ margin:.6em 0 }
+.title-page p{ text-indent:0; text-align:center; color:var(--ink-soft);
+  font-size:.92em }
+.part-page{ text-align:center; display:flex; flex-direction:column;
+  justify-content:center; height:100%; }
+.part-page h1{ font-family:var(--sans); font-size:.72em; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--ink-soft); font-weight:500;
+  margin:0 0 1.1em }
+.part-page h2{ font-size:2.1em; margin:0 0 .5em }
+.part-page p{ text-indent:0; text-align:center; font-style:italic;
+  color:var(--ink-soft) }
+
+/* ---------- chrome ---------- */
+#bar{
+  display:flex; align-items:center; gap:16px; font-family:var(--sans);
+  font-size:12px; color:var(--ink-soft); letter-spacing:.04em;
+}
+#bar button{
+  font:inherit; color:inherit; background:none; border:1px solid var(--rule);
+  border-radius:4px; padding:4px 11px; cursor:pointer;
+}
+#bar button:hover{ color:var(--ink); border-color:var(--ink-soft) }
+#bar button:disabled{ opacity:.3; cursor:default }
+#folio{ min-width:96px; text-align:center; font-variant-numeric:tabular-nums }
+#hint{ font-family:var(--sans); font-size:11px; color:var(--ink-soft);
+  opacity:.6; letter-spacing:.05em }
+@media (max-width:720px){
+  :root{ --page-w:min(86vw,420px); --page-h:min(70vh,620px) }
+  #viewport{ width:var(--page-w) }
+  #book{ padding:0 22px }
+  #flow{ column-gap:0; text-align:left; hyphens:none }
+  #book::before{ display:none }
+}
+</style>
+</head>
+<body>
+
+<div id="book">
+  <div id="viewport"><div id="flow">
+<!--BOOK-->
+  </div></div>
+</div>
+
+<div id="bar">
+  <button id="prev" aria-label="Previous page">&larr;</button>
+  <span id="folio">&nbsp;</span>
+  <button id="next" aria-label="Next page">&rarr;</button>
+</div>
+<div id="hint">arrow keys, or click a page edge</div>
+
+<script>
+(function(){
+  var flow=document.getElementById('flow'), vp=document.getElementById('viewport');
+  var folio=document.getElementById('folio');
+  var prev=document.getElementById('prev'), next=document.getElementById('next');
+  var spread=0, spreads=1, perSpread=2, step=0;
+
+  function measure(){
+    // one column + its gap = one page's horizontal stride
+    var cs=getComputedStyle(flow);
+    var colW=parseFloat(cs.columnWidth), gap=parseFloat(cs.columnGap)||0;
+    if(!colW||isNaN(colW)) colW=vp.clientWidth;
+    perSpread = vp.clientWidth > colW*1.5 ? 2 : 1;
+    step = (colW+gap)*perSpread;
+    // scrollWidth includes the overflow columns CSS generated for us
+    var total=Math.max(flow.scrollWidth, vp.clientWidth);
+    var pages=Math.max(1, Math.round((total+gap)/(colW+gap)));
+    spreads=Math.max(1, Math.ceil(pages/perSpread));
+    if(spread>=spreads) spread=spreads-1;
+    paint();
+  }
+  function paint(){
+    flow.style.transform='translateX('+(-spread*step)+'px)';
+    var a=spread*perSpread+1, b=Math.min(a+perSpread-1, spreads*perSpread);
+    folio.textContent = (perSpread===2 && b>a ? a+' to '+b : a)
+                      + ' / ' + spreads*perSpread;
+    prev.disabled = spread===0;
+    next.disabled = spread>=spreads-1;
+  }
+  function go(d){
+    var n=spread+d;
+    if(n<0||n>=spreads) return;
+    spread=n; paint();
+  }
+
+  prev.onclick=function(){go(-1)}; next.onclick=function(){go(1)};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1)}
+    if(e.key==='Home'){spread=0;paint()}
+    if(e.key==='End'){spread=spreads-1;paint()}
+  });
+  vp.addEventListener('click',function(e){
+    go(e.clientX < vp.getBoundingClientRect().left+vp.clientWidth/2 ? -1 : 1);
+  });
+  var x0=null;
+  vp.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  vp.addEventListener('touchend',function(e){
+    if(x0===null) return;
+    var dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(Math.abs(dx)>44) go(dx<0?1:-1);
+  },{passive:true});
+
+  var t; addEventListener('resize',function(){clearTimeout(t);t=setTimeout(measure,120)});
+  // fonts change metrics, so re-measure once they land
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure);
+  measure();
+})();
+</script>
+</body>
+</html>
