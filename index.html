@@ -8,141 +8,167 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/page-flip.css">
 <style>
 :root{
-  --paper:#f6f1e7; --paper-edge:#efe7d8; --ink:#241f1a; --ink-soft:#6b6055;
-  --rule:#c9bda8; --accent:#8a5a2b; --gutter:#d9cdb8;
-  --page-w:min(42vw,400px); --page-h:min(74vh,660px);
+  --paper:#f6f1e7; --paper-2:#f2ece0; --room:#e7dfd0;
+  --ink:#241f1a; --ink-soft:#6b6055; --rule:#c9bda8; --accent:#8a5a2b;
+  --cover:#5c3a21; --cover-ink:#f0e4d2;
   --serif:"EB Garamond",Georgia,"Times New Roman",serif;
   --sans:"Inter",system-ui,-apple-system,sans-serif;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme=light]){
-    --paper:#1c1916; --paper-edge:#17140f; --ink:#e6ddcd; --ink-soft:#9c9285;
-    --rule:#3c352c; --accent:#c08a4e; --gutter:#0f0d0a;
-  }
-}
+@media (prefers-color-scheme:dark){ :root:not([data-theme=light]){
+  --paper:#1e1a16; --paper-2:#1a1713; --room:#100e0b;
+  --ink:#e6ddcd; --ink-soft:#9c9285; --rule:#3c352c; --accent:#c08a4e;
+  --cover:#2a1c11; --cover-ink:#e6d3b6;
+}}
 :root[data-theme=dark]{
-  --paper:#1c1916; --paper-edge:#17140f; --ink:#e6ddcd; --ink-soft:#9c9285;
-  --rule:#3c352c; --accent:#c08a4e; --gutter:#0f0d0a;
+  --paper:#1e1a16; --paper-2:#1a1713; --room:#100e0b;
+  --ink:#e6ddcd; --ink-soft:#9c9285; --rule:#3c352c; --accent:#c08a4e;
+  --cover:#2a1c11; --cover-ink:#e6d3b6;
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0; background:var(--paper-edge); color:var(--ink);
-  font-family:var(--serif);
+  margin:0; background:var(--room); color:var(--ink); font-family:var(--serif);
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:14px; padding:18px; overflow:hidden;
+  gap:16px; padding:16px; overflow:hidden;
+}
+#src{ position:absolute; left:-99999px; top:0; visibility:hidden }
+#stage{ position:absolute; left:-99999px; top:0; visibility:hidden }
+
+/* ---------- the book ---------- */
+#book{ margin:0 auto; display:flex; justify-content:center }
+/* PageFlip.destroy() calls block.remove() on whatever element it was given,
+   so it gets this disposable child and #book itself always survives a resize */
+#mount{ filter:drop-shadow(0 12px 24px rgba(0,0,0,.30)) }
+
+.page{
+  position:relative;               /* StPageFlip re-sets this to absolute */
+  background:var(--paper); color:var(--ink); overflow:hidden;
+  font-size:var(--fs); line-height:1.62;
+  text-align:justify; hyphens:auto;
+  -webkit-backface-visibility:hidden; backface-visibility:hidden;
+}
+/* The gutter. StPageFlip tags each leaf with its own "--left" / "--right"
+   class, so match those tokens rather than inventing parallel ones. A leaf's
+   inner edge is the one against the spine: right edge on a left-hand page. */
+.page:not(.page--cover)[class~="--left"]{
+  background:linear-gradient(270deg,rgba(0,0,0,.11),rgba(0,0,0,0) 8%),var(--paper);
+}
+.page:not(.page--cover)[class~="--right"]{
+  background:linear-gradient(90deg,rgba(0,0,0,.11),rgba(0,0,0,0) 8%),var(--paper);
+}
+/* insets instead of flex, so the layout survives an inline display:block */
+.page-content{
+  position:absolute; overflow:hidden;
+  left:var(--pad); right:var(--pad);
+  top:var(--pad); bottom:calc(var(--pad) * 1.05);
+}
+.folio{
+  position:absolute; left:0; right:0; bottom:calc(var(--pad) * .38);
+  text-align:center; font-family:var(--sans); font-size:10px;
+  letter-spacing:.16em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
 }
 
-/* ---------- the book object ---------- */
-#book{
-  position:relative; display:flex; background:var(--paper); padding:0 40px;
-  border-radius:3px 6px 6px 3px;
-  box-shadow:0 1px 2px rgba(0,0,0,.18),0 18px 44px -12px rgba(0,0,0,.35);
+/* ---------- covers ---------- */
+.page--cover{
+  background:var(--cover); color:var(--cover-ink); text-align:center;
+  border:1px solid rgba(0,0,0,.35);
 }
-#book::before{ /* the spine */
-  content:""; position:absolute; left:50%; top:0; bottom:0; width:38px;
-  transform:translateX(-50%); pointer-events:none; z-index:3;
-  background:linear-gradient(90deg,transparent,rgba(0,0,0,.09) 38%,
-    var(--gutter) 50%,rgba(0,0,0,.09) 62%,transparent);
-  opacity:.55;
+.page--cover .page-content{
+  display:flex; flex-direction:column; justify-content:center;
+  overflow:visible; text-align:center;
 }
-#viewport{ overflow:hidden; width:calc(var(--page-w)*2 + 96px); height:var(--page-h); }
-#flow{
-  height:100%;
-  column-width:var(--page-w); column-gap:96px; column-fill:auto;
-  transition:transform .34s cubic-bezier(.4,0,.2,1);
-  padding:38px 0; /* top/bottom page margin */
-  font-size:clamp(15px,1.28vw,17.5px); line-height:1.62;
-  text-align:justify; hyphens:auto; orphans:2; widows:2;
+.page--cover h1{ font-size:2.3em; line-height:1.1; margin:0 0 .2em; font-weight:500 }
+.page--cover h3{
+  font-family:var(--sans); font-size:.6em; letter-spacing:.22em;
+  text-transform:uppercase; opacity:.75; font-weight:500; margin:.7em 0;
 }
-/* the column box is the page; pad inside it, never outside */
-#flow > section{ break-before:column; }
-#flow > section:first-child{ break-before:auto; }
+.page--cover p{ text-indent:0; text-align:center; font-size:.86em; opacity:.72 }
+.page--cover hr.rule{ background:currentColor; opacity:.3 }
+.page--cover .slot{ color:inherit; border-color:currentColor; opacity:.65 }
 
-/* ---------- typography inside a page ---------- */
-#flow p{ margin:0 0 .62em; text-indent:1.2em; }
-#flow p:first-of-type,
-#flow h1+p,#flow h2+p,#flow h3+p,#flow blockquote+p,#flow hr+p{ text-indent:0; }
-#flow h1,#flow h2,#flow h3{ font-weight:500; break-after:avoid; }
-#flow h2{
-  font-size:1.5em; line-height:1.2; margin:0 0 .1em; letter-spacing:.01em;
-}
-#flow h3{
-  font-family:var(--sans); font-size:.66em; letter-spacing:.16em;
+/* ---------- typography ---------- */
+.page p{ margin:0 0 .62em; text-indent:1.2em }
+.page p:first-child,
+.page h1+p,.page h2+p,.page h3+p,.page blockquote+p,.page hr+p{ text-indent:0 }
+.page h1,.page h2,.page h3{ font-weight:500 }
+.page h2{ font-size:1.5em; line-height:1.2; margin:0 0 .1em }
+.page h3{
+  font-family:var(--sans); font-size:.64em; letter-spacing:.16em;
   text-transform:uppercase; color:var(--ink-soft); font-weight:500;
   margin:1.5em 0 .5em;
 }
-#flow h2+h3{ margin-top:.2em }
-#flow blockquote{
-  margin:1.1em 0; padding-left:.95em; border-left:2px solid var(--rule);
-  font-style:italic; color:var(--ink);
+.page h2+h3{ margin-top:.2em }
+.page blockquote{
+  margin:1.05em 0; padding-left:.95em; border-left:2px solid var(--rule);
+  font-style:italic;
 }
-#flow blockquote p{ text-indent:0; margin:0 0 .55em }
-#flow blockquote p:last-of-type{ margin-bottom:0 }
-#flow cite{
-  display:block; break-before:avoid; margin-top:.35em; font-style:normal; font-family:var(--sans);
-  font-size:.68em; letter-spacing:.09em; text-transform:uppercase;
+.page blockquote p{ text-indent:0; margin:0 0 .55em }
+.page blockquote p:last-child{ margin-bottom:0 }
+.page cite{
+  display:block; margin-top:.35em; font-style:normal; font-family:var(--sans);
+  font-size:.66em; letter-spacing:.09em; text-transform:uppercase;
   color:var(--ink-soft);
 }
-#flow ul,#flow ol{ margin:.5em 0 .8em; padding-left:1.3em }
-#flow li{ margin-bottom:.32em }
-#flow hr.rule{
+.page ul,.page ol{ margin:.5em 0 .8em; padding-left:1.3em }
+.page li{ margin-bottom:.32em }
+/* the tail of a list item continued from the previous page keeps its counter
+   slot (so the next item numbers correctly) but shows no marker of its own */
+.page li[data-carry]{ list-style:none }
+.page hr.rule{
   border:0; height:1px; background:var(--rule); width:34%;
-  margin:1.6em auto; opacity:.7;
+  margin:1.5em auto; opacity:.7;
 }
-#flow a{ color:var(--accent) }
+.page a{ color:var(--accent) }
 .slot{
-  font-family:var(--sans); font-size:.78em; font-style:normal;
-  color:var(--accent); border-bottom:1px dotted var(--accent);
-  padding:0 .12em; opacity:.85;
+  font-family:var(--sans); font-size:.76em; font-style:normal;
+  color:var(--accent); border-bottom:1px dotted var(--accent); padding:0 .12em;
 }
-
-/* ---------- special sections ---------- */
-.title-page{ text-align:center; display:flex; flex-direction:column;
-  justify-content:center; height:100%; }
-.title-page h1{ font-size:2.5em; line-height:1.08; margin:0 0 .12em;
-  letter-spacing:-.01em; }
-.title-page h3{ margin:.6em 0 }
-.title-page p{ text-indent:0; text-align:center; color:var(--ink-soft);
-  font-size:.92em }
-.part-page{ text-align:center; display:flex; flex-direction:column;
-  justify-content:center; height:100%; }
-.part-page h1{ font-family:var(--sans); font-size:.72em; letter-spacing:.3em;
-  text-transform:uppercase; color:var(--ink-soft); font-weight:500;
-  margin:0 0 1.1em }
-.part-page h2{ font-size:2.1em; margin:0 0 .5em }
-.part-page p{ text-indent:0; text-align:center; font-style:italic;
-  color:var(--ink-soft) }
+/* full-page display sections */
+.page--display .page-content{
+  display:flex; flex-direction:column; justify-content:center; text-align:center;
+}
+.page--display p{ text-indent:0; text-align:center; font-style:italic; color:var(--ink-soft) }
+.page--display h1{
+  font-family:var(--sans); font-size:.68em; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--ink-soft); margin:0 0 1.1em;
+}
+.page--display h2{ font-size:2em; margin:0 0 .5em; text-align:center }
+.page--display h3{ text-align:center }
 
 /* ---------- chrome ---------- */
 #bar{
-  display:flex; align-items:center; gap:16px; font-family:var(--sans);
+  display:flex; align-items:center; gap:14px; font-family:var(--sans);
   font-size:12px; color:var(--ink-soft); letter-spacing:.04em;
 }
 #bar button{
   font:inherit; color:inherit; background:none; border:1px solid var(--rule);
-  border-radius:4px; padding:4px 11px; cursor:pointer;
+  border-radius:4px; padding:5px 12px; cursor:pointer;
 }
-#bar button:hover{ color:var(--ink); border-color:var(--ink-soft) }
-#bar button:disabled{ opacity:.3; cursor:default }
-#folio{ min-width:96px; text-align:center; font-variant-numeric:tabular-nums }
-#hint{ font-family:var(--sans); font-size:11px; color:var(--ink-soft);
-  opacity:.6; letter-spacing:.05em }
-@media (max-width:720px){
-  :root{ --page-w:min(86vw,420px); --page-h:min(70vh,620px) }
-  #viewport{ width:var(--page-w) }
-  #book{ padding:0 22px }
-  #flow{ column-gap:0; text-align:left; hyphens:none }
-  #book::before{ display:none }
+#bar button:hover:not(:disabled){ color:var(--ink); border-color:var(--ink-soft) }
+#bar button:disabled{ opacity:.28; cursor:default }
+#folio{ min-width:104px; text-align:center; font-variant-numeric:tabular-nums }
+#hint{ font-family:var(--sans); font-size:11px; color:var(--ink-soft); opacity:.6 }
+#boot{
+  font-family:var(--sans); font-size:12px; color:var(--ink-soft);
+  letter-spacing:.05em;
 }
 </style>
 </head>
 <body>
 
-<div id="book">
-  <div id="viewport"><div id="flow">
+<div id="boot">setting the pages&hellip;</div>
+<div id="book" hidden></div>
+<div id="bar" hidden>
+  <button id="prev" aria-label="Previous page">&larr;</button>
+  <span id="folio">&nbsp;</span>
+  <button id="next" aria-label="Next page">&rarr;</button>
+</div>
+<div id="hint" hidden>drag a page corner, or use the arrow keys</div>
+
+<div id="src">
 <section class="title-page" data-src="00-title.md">
 <h1>Unfair to Everyone</h1>
 <h3>A life, and what it taught</h3>
@@ -382,73 +408,246 @@ body{
 <hr class="rule">
 <p><em>Everyone can read some motivational quotes and boost dopamine for a short period. But when you extract lessons from conversations with real people, it hits different.</em></p>
 </section>
-  </div></div>
 </div>
+<div id="stage"></div>
 
-<div id="bar">
-  <button id="prev" aria-label="Previous page">&larr;</button>
-  <span id="folio">&nbsp;</span>
-  <button id="next" aria-label="Next page">&rarr;</button>
-</div>
-<div id="hint">arrow keys, or click a page edge</div>
-
+<script src="vendor/page-flip.browser.js"></script>
 <script>
 (function(){
-  var flow=document.getElementById('flow'), vp=document.getElementById('viewport');
+  var src=document.getElementById('src'), stage=document.getElementById('stage');
+  var bookEl=document.getElementById('book'), boot=document.getElementById('boot');
+  var mountEl=null;
+  var bar=document.getElementById('bar'), hint=document.getElementById('hint');
   var folio=document.getElementById('folio');
   var prev=document.getElementById('prev'), next=document.getElementById('next');
-  var spread=0, spreads=1, perSpread=2, step=0;
+  var flip=null, W=0, H=0, PAD=0;
 
-  function measure(){
-    // one column + its gap = one page's horizontal stride
-    var cs=getComputedStyle(flow);
-    var colW=parseFloat(cs.columnWidth), gap=parseFloat(cs.columnGap)||0;
-    if(!colW||isNaN(colW)) colW=vp.clientWidth;
-    perSpread = vp.clientWidth > colW*1.5 ? 2 : 1;
-    step = (colW+gap)*perSpread;
-    // scrollWidth includes the overflow columns CSS generated for us
-    var total=Math.max(flow.scrollWidth, vp.clientWidth);
-    var pages=Math.max(1, Math.round((total+gap)/(colW+gap)));
-    spreads=Math.max(1, Math.ceil(pages/perSpread));
-    if(spread>=spreads) spread=spreads-1;
+  /* ---------------- 1. geometry ---------------- */
+  function geometry(){
+    var portrait = innerWidth < 760;
+    var maxW = portrait ? innerWidth-32 : (innerWidth-72)/2;
+    var maxH = innerHeight-132;
+    // a page is taller than it is wide, the way a printed book is
+    W = Math.min(430, maxW, maxH*0.70);
+    H = Math.min(maxH, W/0.70);
+    W = Math.round(W); H = Math.round(H);
+    PAD = Math.round(Math.max(26, W*0.105));
+    document.documentElement.style.setProperty('--pad', PAD+'px');
+    document.documentElement.style.setProperty('--fs',
+      Math.max(13.5, Math.min(17, W/25.5)).toFixed(2)+'px');
+    return portrait;
+  }
+
+  /* ---------------- 2. paginate ----------------
+     StPageFlip needs discrete, equally sized page elements, so the text has to
+     be measured and broken here instead of by the browser's own column code.
+     Blocks are flattened to atoms (leaf blocks, remembering which blockquote
+     or list they came from) and poured into pages one at a time. An atom that
+     will not fit alone is trimmed word by word and the remainder carried over,
+     which keeps inline markup intact. */
+
+  function newPage(cls){
+    var p=document.createElement('div');
+    p.className='page'+(cls?' '+cls:'');
+    p.style.width=W+'px'; p.style.height=H+'px';
+    var c=document.createElement('div'); c.className='page-content';
+    p.appendChild(c);
+    return p;
+  }
+  function overflowing(page){
+    var c=page.firstChild;
+    return c.scrollHeight > c.clientHeight + 1;
+  }
+  // remove and return the last word (or last element) of a node
+  function trimTail(node){
+    var last=node.lastChild;
+    while(last && last.nodeType===3 && !last.data.trim()){
+      node.removeChild(last); last=node.lastChild;
+    }
+    if(!last) return null;
+    if(last.nodeType===3){
+      var m=last.data.match(/^([\s\S]*?)(\S+\s*)$/);
+      if(m && m[1].trim()){ last.data=m[1]; return document.createTextNode(m[2]); }
+      node.removeChild(last); return last;
+    }
+    node.removeChild(last); return last;
+  }
+  function splitToFit(node, page){
+    var tail=[], guard=4000;
+    while(overflowing(page) && guard--){
+      var t=trimTail(node);
+      if(!t) break;
+      tail.unshift(t);
+    }
+    if(!tail.length) return null;
+    var carry=node.cloneNode(false);
+    tail.forEach(function(n){ carry.appendChild(n); });
+    return carry;
+  }
+  function atomize(section){
+    var out=[];
+    (function walk(parent, chain){
+      Array.prototype.slice.call(parent.children).forEach(function(el){
+        if(/^(BLOCKQUOTE|UL|OL)$/.test(el.tagName)) walk(el, chain.concat([el]));
+        else out.push({node:el, chain:chain});
+      });
+    })(section, []);
+    return out;
+  }
+
+  function paginate(){
+    var pages=[];
+    stage.textContent='';
+    var wrapMap=new Map();
+    // source <ol> -> how many of its items have been finished on earlier pages,
+    // so a list broken across a spread carries on numbering instead of restarting
+    var olDone=new Map();
+    function finished(node, chain){          // an item that ended on this page
+      var owner=chain[chain.length-1];
+      if(owner && owner.tagName==='OL' && node.tagName==='LI')
+        olDone.set(owner, (olDone.get(owner)||0)+1);
+    }
+
+    Array.prototype.forEach.call(src.children, function(section){
+      var display = /title-page|part-page/.test(section.className);
+      var page = newPage(display ? 'page--display' : '');
+      stage.appendChild(page); pages.push(page);
+      wrapMap = new Map();
+
+      if(display){ // never split a display page, it is one spread by design
+        // snapshot first: .children is live, appending elsewhere reindexes it
+        Array.prototype.slice.call(section.cloneNode(true).children)
+          .forEach(function(n){ page.firstChild.appendChild(n); });
+        return;
+      }
+
+      atomize(section).forEach(function(atom){
+        var queue=[atom.node.cloneNode(true)];
+        while(queue.length){
+          var node=queue.shift();
+          var host=page.firstChild;
+          atom.chain.forEach(function(w){
+            var clone=wrapMap.get(w);
+            if(!clone || !page.contains(clone)){
+              clone=document.createElement(w.tagName);
+              clone.className=w.className;
+              if(w.tagName==='OL') clone.setAttribute('start', (olDone.get(w)||0)+1);
+              host.appendChild(clone);
+              wrapMap.set(w, clone);
+            }
+            host=clone;
+          });
+          host.appendChild(node);
+
+          if(!overflowing(page)){ finished(node, atom.chain); continue; }
+
+          // does not fit: try to keep the part that does, carry the rest
+          var carry=splitToFit(node, page);
+          var kept = node.textContent.trim().length > 0 && !overflowing(page);
+          if(!kept){                       // nothing of it fits here at all
+            if(carry){                     // put it back together
+              while(carry.firstChild) node.appendChild(carry.firstChild);
+              carry=null;
+            }
+            node.parentNode.removeChild(node);
+            // drop wrappers this page opened but never filled
+            atom.chain.forEach(function(w){
+              var c=wrapMap.get(w);
+              if(c && !c.firstChild && c.parentNode) c.parentNode.removeChild(c);
+            });
+            if(page.firstChild.firstChild){ // start a fresh page and retry
+              page=newPage(''); stage.appendChild(page); pages.push(page);
+              wrapMap=new Map();
+              queue.unshift(node);
+              continue;
+            }
+            host.appendChild(node);        // page already empty, let it ride
+            continue;
+          }
+          if(carry){
+            if(node.tagName==='LI') carry.dataset.carry='1';
+            page=newPage(''); stage.appendChild(page); pages.push(page);
+            wrapMap=new Map();
+            queue.unshift(carry);
+          } else {
+            finished(node, atom.chain);
+          }
+        }
+      });
+    });
+
+    // the title page becomes a hard cover, plus a hard back cover to close on
+    pages[0].classList.add('page--cover');
+    pages[0].classList.remove('page--display');
+    var back=newPage('page--cover'); stage.appendChild(back); pages.push(back);
+    // spreads only line up if the interior has an even number of leaves
+    if(pages.length % 2) { var blank=newPage(''); stage.insertBefore(blank, back); pages.splice(pages.length-1,0,blank); }
+
+    // folios, cover and back cover unnumbered
+    pages.forEach(function(p,i){
+      p.dataset.density = p.classList.contains('page--cover') ? 'hard' : 'soft';
+      if(p.dataset.density==='hard') return;
+      var f=document.createElement('div');
+      f.className='folio'; f.textContent=i;
+      p.appendChild(f);
+    });
+    return pages;
+  }
+
+  /* ---------------- 3. mount ---------------- */
+  function paint(){
+    if(!flip) return;
+    var i=flip.getCurrentPageIndex(), n=flip.getPageCount();
+    folio.textContent = i===0 ? 'cover' : (i>=n-1 ? 'the end' : i+' / '+(n-2));
+    prev.disabled = i<=0;
+    next.disabled = i>=n-1;
+  }
+  function mount(keep){
+    var portrait=geometry();
+    var pages=paginate();
+
+    if(flip){ try{ flip.destroy(); }catch(e){} flip=null; }
+    bookEl.textContent='';                 // in case destroy left anything
+    mountEl=document.createElement('div');
+    mountEl.id='mount';
+    bookEl.appendChild(mountEl);
+    pages.forEach(function(p){ mountEl.appendChild(p); });
+
+    // StPageFlip picks portrait whenever the container is narrower than two
+    // pages (calculateBoundsRect: `e < 2*h && usePortrait`), so the spread
+    // only appears if the container is sized for it explicitly.
+    mountEl.style.width  = (portrait ? W : W*2)+'px';
+    mountEl.style.height = H+'px';
+    flip = new St.PageFlip(mountEl, {
+      width:W, height:H, size:'fixed',
+      showCover:true, usePortrait:true, autoSize:false,
+      maxShadowOpacity:.45, flippingTime:680,
+      mobileScrollSupport:false, swipeDistance:24,
+      startPage: Math.min(keep||0, pages.length-1)
+    });
+    flip.loadFromHTML(mountEl.querySelectorAll('.page'));
+    flip.on('flip', paint);
+    flip.on('changeOrientation', paint);
+    boot.hidden=true; bookEl.hidden=false; bar.hidden=false; hint.hidden=false;
     paint();
   }
-  function paint(){
-    flow.style.transform='translateX('+(-spread*step)+'px)';
-    var a=spread*perSpread+1, b=Math.min(a+perSpread-1, spreads*perSpread);
-    folio.textContent = (perSpread===2 && b>a ? a+' to '+b : a)
-                      + ' / ' + spreads*perSpread;
-    prev.disabled = spread===0;
-    next.disabled = spread>=spreads-1;
-  }
-  function go(d){
-    var n=spread+d;
-    if(n<0||n>=spreads) return;
-    spread=n; paint();
-  }
 
-  prev.onclick=function(){go(-1)}; next.onclick=function(){go(1)};
-  document.addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(1)}
-    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1)}
-    if(e.key==='Home'){spread=0;paint()}
-    if(e.key==='End'){spread=spreads-1;paint()}
+  prev.onclick=function(){ flip && flip.flipPrev() };
+  next.onclick=function(){ flip && flip.flipNext() };
+  addEventListener('keydown', function(e){
+    if(!flip) return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){ e.preventDefault(); flip.flipNext(); }
+    if(e.key==='ArrowLeft' ||e.key==='PageUp'){ e.preventDefault(); flip.flipPrev(); }
   });
-  vp.addEventListener('click',function(e){
-    go(e.clientX < vp.getBoundingClientRect().left+vp.clientWidth/2 ? -1 : 1);
+  var t;
+  addEventListener('resize', function(){
+    clearTimeout(t);
+    t=setTimeout(function(){ mount(flip?flip.getCurrentPageIndex():0); }, 220);
   });
-  var x0=null;
-  vp.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
-  vp.addEventListener('touchend',function(e){
-    if(x0===null) return;
-    var dx=e.changedTouches[0].clientX-x0; x0=null;
-    if(Math.abs(dx)>44) go(dx<0?1:-1);
-  },{passive:true});
 
-  var t; addEventListener('resize',function(){clearTimeout(t);t=setTimeout(measure,120)});
-  // fonts change metrics, so re-measure once they land
-  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(measure);
-  measure();
+  // web fonts change every measurement, so paginate only once they are in
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ mount(0); });
+  else mount(0);
 })();
 </script>
 </body>

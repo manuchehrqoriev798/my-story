@@ -1,5 +1,11 @@
 .DS_Store
 __pycache__/
 *.pyc
+
+# Playwright MCP scratch: screenshots, page snapshots, console logs.
+# Everything captured while checking how the book renders lands here.
 .playwright-mcp/
-book-*.png
+
+# Stray screenshots at the repo root. Scoped to the root on purpose, so an
+# image the book itself uses (book/images/...) stays committable.
+/*.png

@@ -3,8 +3,9 @@
 A book by Manuchehr Qoriev, and the small amount of code that renders it as a
 book: a two page spread you turn with the arrow keys.
 
-Open `index.html` in any browser. No build step to read it, no dependencies,
-no network required beyond the two web fonts.
+Open `index.html` in any browser. Drag a page corner to turn it, or use the
+arrow keys. No build step to read it, no install, and no network needed
+beyond the two web fonts.
 
 ## The loop
 
@@ -13,9 +14,18 @@ key-points.md  +  book/*.md   ->   python3 build.py   ->   index.html
 ```
 
 That is the whole system. `build.py` is stdlib only Python: no pandoc, no
-markdown package, no npm. Pagination is not computed here, it is done by the
-browser with CSS multi-column, so long text splits across pages the way a
-printed book does.
+markdown package, no npm.
+
+The page turning is [StPageFlip](https://github.com/Nodlik/StPageFlip) (MIT,
+zero dependencies, 44KB), vendored into `vendor/` rather than loaded from a
+CDN so a clone keeps working offline and cannot break when a CDN changes.
+
+StPageFlip needs discrete, equally sized page elements, so the text is
+measured and broken into pages in `template.html` before the library ever
+sees it. Blocks are flattened into atoms, poured into pages one at a time,
+and any atom that will not fit is trimmed word by word with the remainder
+carried to the next page, which keeps italics, links and drafting marks
+intact across a break.
 
 ## The file you keep adding to
 
@@ -50,12 +60,16 @@ them on every run.
 
 ```
 build.py         markdown subset -> html. ~200 lines, stdlib only
-template.html    the book: typography, spread, page turning
+template.html    the book: typography, paginator, page turning
+vendor/          StPageFlip, vendored so the book works offline
 key-points.md    Part One. THE FILE YOU EDIT
 book/            Part Two and the front matter, one file per chapter
 index.html       generated, committed so it works from a plain clone
 sayings.txt      the raw source Part Two was built from
 ```
+
+Screenshots taken while checking the rendering go to `.playwright-mcp/`,
+which is ignored.
 
 Reading order lives in the `ORDER` list at the top of `build.py`. To add or
 move a chapter, add a file to `book/` and put it in that list.
