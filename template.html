@@ -260,21 +260,32 @@ body{
 /* ─────────────────────────── controls ─────────────────────────── */
 #bar{
   position:fixed; left:0; right:0; bottom:0; z-index:20;
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  padding:14px 18px calc(14px + env(safe-area-inset-bottom));
+  padding:14px 20px calc(14px + env(safe-area-inset-bottom));
   font-family:var(--sans); font-size:12px; color:var(--ink-soft);
 }
+#barin{
+  width:min(1040px,100%); margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between; gap:18px;
+}
+/* buttons that belong together are joined into one control, not scattered */
+.group{
+  display:flex; align-items:center;
+  border:1px solid var(--panel-line); border-radius:8px; overflow:hidden;
+}
+.group .btn{ border:0; border-radius:0 }
+.group .btn + .btn{ box-shadow:inset 1px 0 0 var(--panel-line) }
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:7px;
   font:inherit; color:inherit; background:transparent;
   border:1px solid var(--panel-line); border-radius:7px;
-  padding:0 11px; height:30px; cursor:pointer;
+  padding:0 12px; height:31px; cursor:pointer;
   transition:color .16s, border-color .16s, background .16s;
 }
-.btn:hover:not(:disabled){ color:var(--ink); border-color:var(--ink-soft) }
+.btn:hover:not(:disabled){ color:var(--ink); background:rgba(138,90,43,.09) }
 .btn:disabled{ opacity:.26; cursor:default }
-.btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px }
-#folio{ min-width:96px; text-align:center; font-variant-numeric:tabular-nums; letter-spacing:.05em }
+.btn:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px }
+#meter{ display:flex; align-items:center; gap:14px; flex:0 1 auto }
+#folio{ min-width:82px; text-align:center; font-variant-numeric:tabular-nums; letter-spacing:.05em }
 /* the progress track doubles as a scrubber */
 #track{
   position:relative; width:min(240px,26vw); height:26px; cursor:pointer;
@@ -351,10 +362,11 @@ body{
 
 @media (max-width:760px){
   #scene{ padding:14px 10px 88px; perspective:1500px }
-  #bar{ gap:7px; font-size:11px }
-  #folio{ min-width:70px }
-  #track{ width:80px }
-  .btn{ padding:0 9px }
+  #bar{ font-size:11px; padding-inline:12px }
+  #barin{ gap:10px }
+  #folio{ min-width:64px }
+  #track{ width:min(120px,22vw) }
+  .btn{ padding:0 10px }
   .btn .label{ display:none }
 }
 @media (prefers-reduced-motion:reduce){
@@ -383,13 +395,25 @@ body{
 <div id="hint" hidden>drag a page corner, or use the arrow keys</div>
 
 <footer id="bar" hidden>
-  <button class="btn" id="tocBtn" aria-haspopup="true">☰ <span class="label">Contents</span></button>
-  <button class="btn" id="prev" aria-label="Previous page">←</button>
-  <div id="track" role="slider" tabindex="0" aria-valuemin="0" aria-label="Reading position"><div id="fill"></div><div id="knob"></div></div>
-  <span id="folio">&nbsp;</span>
-  <button class="btn" id="next" aria-label="Next page">→</button>
-  <button class="btn" id="themeBtn" aria-label="Change theme">◐</button>
-  <button class="btn" id="fullBtn" aria-label="Fullscreen">⤢</button>
+ <div id="barin">
+  <!-- everything that is not reading: one cluster -->
+  <div class="group">
+    <button class="btn" id="tocBtn" aria-haspopup="true">☰ <span class="label">Contents</span></button>
+    <button class="btn" id="themeBtn" aria-label="Day or night">◐</button>
+    <button class="btn" id="fullBtn" aria-label="Fullscreen">⤢</button>
+  </div>
+
+  <div id="meter">
+    <div id="track" role="slider" tabindex="0" aria-valuemin="0" aria-label="Reading position"><div id="fill"></div><div id="knob"></div></div>
+    <span id="folio">&nbsp;</span>
+  </div>
+
+  <!-- back and forward belong side by side, like the two directions they are -->
+  <div class="group">
+    <button class="btn" id="prev" aria-label="Previous page">←</button>
+    <button class="btn" id="next" aria-label="Next page">→</button>
+  </div>
+ </div>
 </footer>
 
 <nav id="toc" aria-hidden="true">
@@ -432,11 +456,16 @@ var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ══ 1. geometry ══════════════════════════════════════════════════ */
 function geometry(){
   var portrait = innerWidth < 780;
-  var room = MAXSTACK*2 + OVERHANG*2 + 26;          // the object is wider than its pages
-  var maxW = portrait ? innerWidth-44-room : (innerWidth-56-room)/2;
-  var maxH = innerHeight-150;
-  W = Math.min(432, maxW, maxH*0.702);
-  H = Math.min(maxH, W/0.702);
+  // A phone is tall and narrow, so a page there is width-limited: keep the
+  // binding slimmer and the leaf narrower, or the book floats in empty screen.
+  MAXSTACK = portrait ? 11 : 21;
+  OVERHANG = portrait ? 5 : 7;
+  var aspect = portrait ? 0.655 : 0.702;            // leaf width over height
+  var room = MAXSTACK*2 + OVERHANG*2 + (portrait ? 14 : 26);
+  var maxW = portrait ? innerWidth-24-room : (innerWidth-56-room)/2;
+  var maxH = innerHeight - (portrait ? 126 : 150);
+  W = Math.min(432, maxW, maxH*aspect);
+  H = Math.min(maxH, W/aspect);
   W = Math.max(210, Math.round(W)); H = Math.round(H);
   PAD = Math.round(Math.max(24, W*0.105));
   var css=document.documentElement.style;
