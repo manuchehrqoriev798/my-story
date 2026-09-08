@@ -75,6 +75,12 @@ body{
   justify-content:center; padding:22px 22px 92px;
   perspective:2600px; perspective-origin:50% 32%;
 }
+/* #stage and #book share one 3D space with the tilted book, so they are flat
+   planes at z=0 that the book leans through: its top half sits BEHIND them and
+   they swallow every pointer event up there, invisible background or not. Only
+   the pages should ever be a target. */
+#scene,#stage,#book{ pointer-events:none }
+#mount{ pointer-events:auto }
 #stage{ position:relative; transform-style:preserve-3d }
 #book{
   position:relative; transform-style:preserve-3d;
@@ -119,7 +125,7 @@ body{
 }
 
 /* ─────────────────────────── the pages ─────────────────────────── */
-#mount{ position:relative; z-index:2 }
+#mount{ position:relative; z-index:2; pointer-events:auto }
 .page{
   position:relative; background:var(--paper); color:var(--ink);
   overflow:hidden; font-size:var(--fs); line-height:1.64;
@@ -763,6 +769,34 @@ function mount(startAt){
     else furniture();
   });
   flip.on('changeOrientation', function(){ furniture(); paint(); });
+
+  /* StPageFlip calls preventDefault on every mousedown it receives, so wherever
+     it listens the text cannot be selected. Hand it only the corner zones,
+     where dragging is the whole point, using its own corner radius so the two
+     agree exactly. Everywhere else the browser keeps the event and a line can
+     be selected to quote. Turning by click is then ours to do. */
+  var handedOver = false;
+  mountEl.addEventListener('mousedown', function(e){
+    if(!flip) return;
+    var r = mountEl.getBoundingClientRect();
+    var w = mountEl.offsetWidth, h = mountEl.offsetHeight;
+    var x = (e.clientX - r.left) * (w / r.width);   // undo the book's lean
+    var y = (e.clientY - r.top)  * (h / r.height);
+    var pw = flip.getOrientation() === 'portrait' ? w : w/2;
+    var s  = Math.sqrt(pw*pw + h*h) / 5;           // isPointOnCorners, same radius
+    var inCorner = (x < s || x > w - s) && (y < s || y > h - s);
+    handedOver = !inCorner;
+    if(handedOver) e.stopPropagation();
+  }, true);
+
+  mountEl.addEventListener('click', function(e){
+    if(!handedOver || !flip) return;
+    if(e.target.closest && e.target.closest('a')) return;
+    if(String(getSelection()).trim().length) return;   // they were selecting, not turning
+    used();
+    var r = mountEl.getBoundingClientRect();
+    if(e.clientX - r.left < r.width/2) flip.flipPrev(); else flip.flipNext();
+  });
 
   buildToc();
   boot.hidden=true; scene.hidden=false; bar.hidden=false; hint.hidden=false;
