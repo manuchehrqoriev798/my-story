@@ -3,12 +3,14 @@
 A book by Manuchehr Qoriev, and the small amount of code that renders it as a
 book: a two page spread you turn with the arrow keys.
 
-Open `index.html` in any browser. Drag a page corner to turn it, or use the
-arrow keys. No build step to read it, no install, and no network needed
+Open `index.html` in any browser. Click a page to turn it, drag a corner to
+pull it across slowly, or use the arrow keys. No build step to read it, no install, and no network needed
 beyond the two web fonts.
 
-| Key | |
+| | |
 |---|---|
+| click | turn the page you clicked |
+| drag a corner | pull it across slowly |
 | `←` `→` | turn a page |
 | `C` | contents |
 | `T` | day or night |

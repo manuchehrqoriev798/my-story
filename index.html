@@ -392,7 +392,7 @@ body{
   </div>
 </main>
 
-<div id="hint" hidden>drag a page corner, or use the arrow keys</div>
+<div id="hint" hidden>click a page to turn it, or drag its corner</div>
 
 <footer id="bar" hidden>
  <div id="barin">
@@ -422,6 +422,8 @@ body{
     <p class="sub">Manuchehr Qoriev</p>
     <ol id="toc-list"></ol>
     <dl id="keys">
+      <dt>click</dt><dd>turn the page you clicked</dd>
+      <dt>drag</dt><dd>pull a corner across slowly</dd>
       <dt>&larr; &rarr;</dt><dd>turn a page</dd>
       <dt>C</dt><dd>contents</dd>
       <dt>T</dt><dd>day or night</dd>
@@ -985,6 +987,10 @@ function mount(startAt){
     showCover:true, usePortrait:true, autoSize:false,
     maxShadowOpacity:.5, flippingTime: calm ? 1 : 720,
     mobileScrollSupport:false, swipeDistance:24,
+    // Off. Left on, the library folds a corner the moment the pointer passes
+    // near it, with no button pressed: the page appears to grab at you while
+    // you are only moving the mouse across the book.
+    showPageCorners:false,
     startPage: Math.max(0, Math.min(startAt||0, pages.length-1))
   });
   flip.loadFromHTML(mountEl.querySelectorAll('.page'));
