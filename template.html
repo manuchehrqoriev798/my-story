@@ -2,105 +2,218 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
 <title>Unfair to Everyone</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="vendor/page-flip.css">
 <style>
+/* ══════════════════════════════════════════════════════════════════════
+   Unfair to Everyone
+
+   The pages are real DOM text, so they stay crisp, selectable and
+   searchable. Everything physical around them (paper stacks, cover
+   boards, the surface it rests on) is CSS, sized at runtime from the
+   real page geometry. Nothing here is a picture of a book.
+   ══════════════════════════════════════════════════════════════════════ */
+
 :root{
-  --paper:#f6f1e7; --paper-2:#f2ece0; --room:#e7dfd0;
-  --ink:#241f1a; --ink-soft:#6b6055; --rule:#c9bda8; --accent:#8a5a2b;
-  --cover:#5c3a21; --cover-ink:#f0e4d2;
+  /* paper */
+  --paper:#f7f2e8; --paper-warm:#f1ead9; --ink:#221d18; --ink-soft:#6d6155;
+  --rule:#c9bda8; --accent:#8a5a2b;
+  --sheen:rgba(255,255,255,.45); --gutter:rgba(60,40,18,.16);
+  /* the physical object */
+  --edge-a:#e6dcc6; --edge-b:#cdbfa2; --edge-shade:rgba(74,58,38,.34);
+  --cover:#5a3720; --cover-hi:#754a2c; --cover-ink:#f2e7d4;
+  /* the room */
+  --room-1:#e9e1d2; --room-2:#d6cbb7; --surface:rgba(70,55,38,.30);
+  --panel:#f7f2e8; --panel-line:#ddd2bc;
+
   --serif:"EB Garamond",Georgia,"Times New Roman",serif;
   --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --tilt:4deg;
 }
 @media (prefers-color-scheme:dark){ :root:not([data-theme=light]){
-  --paper:#1e1a16; --paper-2:#1a1713; --room:#100e0b;
-  --ink:#e6ddcd; --ink-soft:#9c9285; --rule:#3c352c; --accent:#c08a4e;
-  --cover:#2a1c11; --cover-ink:#e6d3b6;
+  --paper:#211d18; --paper-warm:#1b1712; --ink:#e9e0d0; --ink-soft:#9a9083;
+  --rule:#3f3830; --accent:#c99257;
+  --sheen:rgba(255,236,205,.055); --gutter:rgba(0,0,0,.42);
+  --edge-a:#2e2820; --edge-b:#191510; --edge-shade:rgba(0,0,0,.6);
+  --cover:#2b1c11; --cover-hi:#3d2917; --cover-ink:#e7d4b6;
+  --room-1:#141210; --room-2:#080706; --surface:rgba(0,0,0,.6);
+  --panel:#211d18; --panel-line:#3a332b;
 }}
 :root[data-theme=dark]{
-  --paper:#1e1a16; --paper-2:#1a1713; --room:#100e0b;
-  --ink:#e6ddcd; --ink-soft:#9c9285; --rule:#3c352c; --accent:#c08a4e;
-  --cover:#2a1c11; --cover-ink:#e6d3b6;
+  --paper:#211d18; --paper-warm:#1b1712; --ink:#e9e0d0; --ink-soft:#9a9083;
+  --rule:#3f3830; --accent:#c99257;
+  --sheen:rgba(255,236,205,.055); --gutter:rgba(0,0,0,.42);
+  --edge-a:#2e2820; --edge-b:#191510; --edge-shade:rgba(0,0,0,.6);
+  --cover:#2b1c11; --cover-hi:#3d2917; --cover-ink:#e7d4b6;
+  --room-1:#141210; --room-2:#080706; --surface:rgba(0,0,0,.6);
+  --panel:#211d18; --panel-line:#3a332b;
 }
+
 *{box-sizing:border-box}
+/* [hidden] loses to any id rule that sets display, so restate it louder */
+[hidden]{ display:none !important }
 html,body{height:100%}
 body{
-  margin:0; background:var(--room); color:var(--ink); font-family:var(--serif);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:16px; padding:16px; overflow:hidden;
+  margin:0; color:var(--ink); font-family:var(--serif);
+  overflow:hidden; overscroll-behavior:none;
+  /* the room: a warm key light from the upper left, falling off to the corners */
+  background:
+    radial-gradient(120% 90% at 26% 6%, var(--room-1), transparent 62%),
+    radial-gradient(140% 120% at 50% 118%, var(--room-2), transparent 70%),
+    var(--room-2);
 }
-#src{ position:absolute; left:-99999px; top:0; visibility:hidden }
-#stage{ position:absolute; left:-99999px; top:0; visibility:hidden }
+#src,#measure{ position:absolute; left:-99999px; top:0; visibility:hidden }
 
-/* ---------- the book ---------- */
-#book{ margin:0 auto; display:flex; justify-content:center }
-/* PageFlip.destroy() calls block.remove() on whatever element it was given,
-   so it gets this disposable child and #book itself always survives a resize */
-#mount{ filter:drop-shadow(0 12px 24px rgba(0,0,0,.30)) }
+/* ─────────────────────────── the scene ─────────────────────────── */
+#scene{
+  position:fixed; inset:0; display:flex; align-items:center;
+  justify-content:center; padding:22px 22px 92px;
+  perspective:2600px; perspective-origin:50% 32%;
+}
+#stage{ position:relative; transform-style:preserve-3d }
+#book{
+  position:relative; transform-style:preserve-3d;
+  transform:translateX(var(--shift,0px))
+            rotateX(var(--tilt)) rotateY(var(--yaw,0deg)) rotateZ(var(--roll,0deg));
+  transition:transform .68s cubic-bezier(.22,.61,.36,1);
+}
+#book.--live{ transition:transform .12s linear }
 
+/* everything physical sits under the pages */
+.prop{ position:absolute; pointer-events:none }
+
+/* the cover boards, seen as an overhang all around the paper */
+#board{
+  z-index:0; border-radius:3px 7px 7px 3px;
+  background:
+    linear-gradient(118deg, var(--cover-hi), var(--cover) 42%, #000 190%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    inset 0 -2px 5px rgba(0,0,0,.42);
+}
+/* the paper block. Fine striations are the individual sheet edges. */
+.stack{ z-index:1 }
+.stack--l,.stack--r{
+  background:
+    repeating-linear-gradient(to right,
+      var(--edge-a) 0 1px, var(--edge-b) 1px 2.1px);
+}
+.stack--l{ box-shadow:inset -3px 0 6px -2px var(--edge-shade); border-radius:2px 0 0 2px }
+.stack--r{ box-shadow:inset  3px 0 6px -2px var(--edge-shade); border-radius:0 2px 2px 0 }
+.stack--b{
+  background:
+    repeating-linear-gradient(to bottom,
+      var(--edge-a) 0 1px, var(--edge-b) 1px 2.1px);
+  box-shadow:inset 0 -3px 6px -2px var(--edge-shade); border-radius:0 0 2px 2px;
+}
+/* the shadow the book casts on whatever it is resting on */
+#contact{
+  z-index:-1; border-radius:50%;
+  background:radial-gradient(50% 50%, var(--surface), transparent 72%);
+  filter:blur(15px);
+}
+
+/* ─────────────────────────── the pages ─────────────────────────── */
+#mount{ position:relative; z-index:2 }
 .page{
-  position:relative;               /* StPageFlip re-sets this to absolute */
-  background:var(--paper); color:var(--ink); overflow:hidden;
-  font-size:var(--fs); line-height:1.62;
+  position:relative; background:var(--paper); color:var(--ink);
+  overflow:hidden; font-size:var(--fs); line-height:1.64;
   text-align:justify; hyphens:auto;
   -webkit-backface-visibility:hidden; backface-visibility:hidden;
 }
-/* The gutter. StPageFlip tags each leaf with its own "--left" / "--right"
-   class, so match those tokens rather than inventing parallel ones. A leaf's
-   inner edge is the one against the spine: right edge on a left-hand page. */
-.page:not(.page--cover)[class~="--left"]{
-  background:linear-gradient(270deg,rgba(0,0,0,.11),rgba(0,0,0,0) 8%),var(--paper);
+/* paper grain: one inline SVG, no image file, no request */
+.page::after{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  opacity:.5; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='.055'/%3E%3C/svg%3E");
 }
-.page:not(.page--cover)[class~="--right"]{
-  background:linear-gradient(90deg,rgba(0,0,0,.11),rgba(0,0,0,0) 8%),var(--paper);
-}
-/* insets instead of flex, so the layout survives an inline display:block */
-.page-content{
-  position:absolute; overflow:hidden;
-  left:var(--pad); right:var(--pad);
-  top:var(--pad); bottom:calc(var(--pad) * 1.05);
-}
-.folio{
-  position:absolute; left:0; right:0; bottom:calc(var(--pad) * .38);
-  text-align:center; font-family:var(--sans); font-size:10px;
-  letter-spacing:.16em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
+/* on dark paper the grain has to lighten, not darken, or it vanishes */
+:root[data-theme=dark] .page::after{ mix-blend-mode:screen; opacity:.3 }
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme=light]) .page::after{ mix-blend-mode:screen; opacity:.3 }
 }
 
-/* ---------- covers ---------- */
-.page--cover{
-  background:var(--cover); color:var(--cover-ink); text-align:center;
-  border:1px solid rgba(0,0,0,.35);
+/* The gutter. StPageFlip tags each leaf with its own "--left" / "--right"
+   class, so match those tokens. A leaf's inner edge is the one against the
+   spine: the right edge on a left-hand page. */
+.page:not(.page--cover)[class~="--left"]{
+  background:
+    linear-gradient(270deg,var(--gutter),rgba(0,0,0,0) 11%),
+    linear-gradient(200deg,var(--sheen),rgba(0,0,0,0) 42%),
+    var(--paper);
 }
+.page:not(.page--cover)[class~="--right"]{
+  background:
+    linear-gradient(90deg,var(--gutter),rgba(0,0,0,0) 11%),
+    linear-gradient(160deg,var(--sheen),rgba(0,0,0,0) 42%),
+    var(--paper);
+}
+.page-content{
+  position:absolute; z-index:1; overflow:hidden;
+  left:var(--pad); right:var(--pad); top:var(--pad);
+  bottom:calc(var(--pad) * 1.05);
+}
+.folio{
+  position:absolute; z-index:1; left:0; right:0; bottom:calc(var(--pad) * .38);
+  text-align:center; font-family:var(--sans); font-size:10px;
+  letter-spacing:.18em; color:var(--ink-soft); font-variant-numeric:tabular-nums;
+}
+
+/* ─────────────────────────── covers ─────────────────────────── */
+.page--cover{
+  background:linear-gradient(118deg,var(--cover-hi),var(--cover) 44%,#1a0f06 165%);
+  color:var(--cover-ink); text-align:center;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.13);
+}
+.page--cover::after{ opacity:.3 }
 .page--cover .page-content{
   display:flex; flex-direction:column; justify-content:center;
   overflow:visible; text-align:center;
+  left:calc(var(--pad)*1.15); right:calc(var(--pad)*1.15);
 }
-.page--cover h1{ font-size:2.3em; line-height:1.1; margin:0 0 .2em; font-weight:500 }
+/* a blind-stamped rule, the way a cover is actually decorated */
+.page--cover .page-content::before{
+  content:""; position:absolute; inset:14px; border:1px solid rgba(242,231,212,.22);
+  border-radius:2px; pointer-events:none;
+}
+.page--cover h1{
+  font-size:2.35em; line-height:1.08; margin:0 0 .16em; font-weight:500;
+  letter-spacing:.005em; text-shadow:0 1px 0 rgba(0,0,0,.45);
+}
 .page--cover h3{
-  font-family:var(--sans); font-size:.6em; letter-spacing:.22em;
-  text-transform:uppercase; opacity:.75; font-weight:500; margin:.7em 0;
+  font-family:var(--sans); font-size:.58em; letter-spacing:.26em;
+  text-transform:uppercase; opacity:.92; font-weight:500; margin:.9em 0;
 }
-.page--cover p{ text-indent:0; text-align:center; font-size:.86em; opacity:.72 }
-.page--cover hr.rule{ background:currentColor; opacity:.3 }
-.page--cover .slot{ color:inherit; border-color:currentColor; opacity:.65 }
+.page--cover p{ text-indent:0; text-align:center; font-size:.85em; opacity:.7 }
+.page--cover hr.rule{ background:currentColor; opacity:.28 }
+.page--cover .slot{ color:inherit; border-color:currentColor; opacity:.6 }
 
-/* ---------- typography ---------- */
+/* ─────────────────────────── typography ─────────────────────────── */
 .page p{ margin:0 0 .62em; text-indent:1.2em }
 .page p:first-child,
 .page h1+p,.page h2+p,.page h3+p,.page blockquote+p,.page hr+p{ text-indent:0 }
-.page h1,.page h2,.page h3{ font-weight:500 }
-.page h2{ font-size:1.5em; line-height:1.2; margin:0 0 .1em }
+/* Headings must never be justified. A two-line chapter title stretched to the
+   measure opens gaps you could park a car in. */
+.page h1,.page h2,.page h3{ font-weight:500; text-align:left; text-wrap:balance }
+.page h2{ font-size:1.52em; line-height:1.18; margin:0 0 .1em }
 .page h3{
-  font-family:var(--sans); font-size:.64em; letter-spacing:.16em;
+  font-family:var(--sans); font-size:.62em; letter-spacing:.18em;
   text-transform:uppercase; color:var(--ink-soft); font-weight:500;
   margin:1.5em 0 .5em;
 }
-.page h2+h3{ margin-top:.2em }
+.page h2+h3{ margin-top:.24em }
+/* A chapter opens with a drop cap, as a set book does. Anchored to h2 so it
+   fires once per chapter, on the first prose paragraph after the epigraph,
+   and never on a cover or a part divider. */
+.page:not(.page--cover):not(.page--display) h2 ~ p:first-of-type::first-letter{
+  float:left; font-size:3.05em; line-height:.82; padding:.04em .085em 0 0;
+  font-weight:500; color:var(--accent);
+}
 .page blockquote{
   margin:1.05em 0; padding-left:.95em; border-left:2px solid var(--rule);
   font-style:italic;
@@ -109,7 +222,7 @@ body{
 .page blockquote p:last-child{ margin-bottom:0 }
 .page cite{
   display:block; margin-top:.35em; font-style:normal; font-family:var(--sans);
-  font-size:.66em; letter-spacing:.09em; text-transform:uppercase;
+  font-size:.66em; letter-spacing:.1em; text-transform:uppercase;
   color:var(--ink-soft);
 }
 .page ul,.page ol{ margin:.5em 0 .8em; padding-left:1.3em }
@@ -125,297 +238,586 @@ body{
 .page code{
   font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
   font-size:.82em; font-style:normal;
-  background:rgba(0,0,0,.045); border-radius:3px; padding:.06em .3em;
+  background:rgba(120,90,50,.11); border-radius:3px; padding:.06em .3em;
   white-space:nowrap;
 }
 .slot{
   font-family:var(--sans); font-size:.76em; font-style:normal;
   color:var(--accent); border-bottom:1px dotted var(--accent); padding:0 .12em;
 }
-/* full-page display sections */
 .page--display .page-content{
   display:flex; flex-direction:column; justify-content:center; text-align:center;
 }
 .page--display p{ text-indent:0; text-align:center; font-style:italic; color:var(--ink-soft) }
 .page--display h1{
-  font-family:var(--sans); font-size:.68em; letter-spacing:.3em;
-  text-transform:uppercase; color:var(--ink-soft); margin:0 0 1.1em;
+  font-family:var(--sans); font-size:.66em; letter-spacing:.32em;
+  text-transform:uppercase; color:var(--ink-soft); margin:0 0 1.15em;
 }
 .page--display h2{ font-size:2em; margin:0 0 .5em; text-align:center }
 .page--display h3{ text-align:center }
+.page--display h3+p::first-letter{ float:none; font-size:inherit; color:inherit; padding:0 }
 
-/* ---------- chrome ---------- */
+/* ─────────────────────────── controls ─────────────────────────── */
 #bar{
-  display:flex; align-items:center; gap:14px; font-family:var(--sans);
-  font-size:12px; color:var(--ink-soft); letter-spacing:.04em;
-}
-#bar button{
-  font:inherit; color:inherit; background:none; border:1px solid var(--rule);
-  border-radius:4px; padding:5px 12px; cursor:pointer;
-}
-#bar button:hover:not(:disabled){ color:var(--ink); border-color:var(--ink-soft) }
-#bar button:disabled{ opacity:.28; cursor:default }
-#folio{ min-width:104px; text-align:center; font-variant-numeric:tabular-nums }
-#hint{ font-family:var(--sans); font-size:11px; color:var(--ink-soft); opacity:.6 }
-#boot{
+  position:fixed; left:0; right:0; bottom:0; z-index:20;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  padding:14px 18px calc(14px + env(safe-area-inset-bottom));
   font-family:var(--sans); font-size:12px; color:var(--ink-soft);
-  letter-spacing:.05em;
+}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  font:inherit; color:inherit; background:transparent;
+  border:1px solid var(--panel-line); border-radius:7px;
+  padding:0 11px; height:30px; cursor:pointer;
+  transition:color .16s, border-color .16s, background .16s;
+}
+.btn:hover:not(:disabled){ color:var(--ink); border-color:var(--ink-soft) }
+.btn:disabled{ opacity:.26; cursor:default }
+.btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px }
+#folio{ min-width:96px; text-align:center; font-variant-numeric:tabular-nums; letter-spacing:.05em }
+/* the progress track doubles as a scrubber */
+#track{
+  position:relative; width:min(240px,26vw); height:26px; cursor:pointer;
+  display:flex; align-items:center;
+}
+#track::before{
+  content:""; position:absolute; left:0; right:0; height:2px;
+  background:var(--panel-line); border-radius:2px;
+}
+#fill{
+  position:absolute; left:0; height:2px; width:0;
+  background:var(--accent); border-radius:2px; transition:width .3s ease;
+}
+#knob{
+  position:absolute; width:9px; height:9px; margin-left:-4.5px; border-radius:50%;
+  background:var(--accent); transition:left .3s ease;
+}
+#hint{
+  position:fixed; left:0; right:0; bottom:58px; z-index:19; text-align:center;
+  font-family:var(--sans); font-size:11px; color:var(--ink-soft);
+  letter-spacing:.06em; opacity:.62; transition:opacity .5s; pointer-events:none;
+}
+#hint.--gone{ opacity:0 }
+#boot{
+  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:var(--sans); font-size:12px; color:var(--ink-soft); letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* ─────────────────────────── contents ─────────────────────────── */
+#toc{
+  position:fixed; inset:0; z-index:30; display:flex; justify-content:flex-start;
+  background:rgba(20,16,12,.5); backdrop-filter:blur(3px);
+  opacity:0; pointer-events:none; transition:opacity .22s;
+}
+#toc.--open{ opacity:1; pointer-events:auto }
+#toc-panel{
+  width:min(370px,86vw); height:100%; overflow-y:auto; padding:26px 24px 30px;
+  background:var(--panel); border-right:1px solid var(--panel-line);
+  transform:translateX(-102%); transition:transform .28s cubic-bezier(.22,.61,.36,1);
+}
+#toc.--open #toc-panel{ transform:none }
+#toc h4{
+  margin:0 0 3px; font-family:var(--sans); font-size:10px; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--ink-soft); font-weight:600;
+}
+#toc .sub{ margin:0 0 20px; font-size:14px; color:var(--ink-soft); font-style:italic }
+#toc ol{ list-style:none; margin:0; padding:0 }
+#toc li{ margin:0 }
+#toc button{
+  display:flex; width:100%; gap:12px; align-items:baseline;
+  background:none; border:0; border-radius:6px; cursor:pointer;
+  padding:8px 9px; color:var(--ink); font-family:var(--serif); font-size:16px;
+  text-align:left; line-height:1.3;
+}
+#toc button:hover{ background:rgba(138,90,43,.10) }
+#toc button .n{
+  font-family:var(--sans); font-size:10px; color:var(--ink-soft);
+  font-variant-numeric:tabular-nums; min-width:22px; text-align:right;
+}
+#toc button .t{ flex:1 }
+#toc button[aria-current=true]{ color:var(--accent); font-weight:500 }
+#keys{
+  display:grid; grid-template-columns:auto 1fr; gap:6px 14px;
+  margin:26px 9px 0; padding-top:18px; border-top:1px solid var(--panel-line);
+  font-family:var(--sans); font-size:11px; color:var(--ink-soft);
+}
+#keys dt{ text-align:right; letter-spacing:.08em; opacity:.75 }
+#keys dd{ margin:0 }
+#toc li.--part button{
+  font-family:var(--sans); font-size:10px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--ink-soft); margin-top:16px;
+}
+
+@media (max-width:760px){
+  #scene{ padding:14px 10px 88px; perspective:1500px }
+  #bar{ gap:7px; font-size:11px }
+  #folio{ min-width:70px }
+  #track{ width:80px }
+  .btn{ padding:0 9px }
+  .btn .label{ display:none }
+}
+@media (prefers-reduced-motion:reduce){
+  *{ transition-duration:.01ms !important }
+  #book{ transform:rotateX(0) }
 }
 </style>
 </head>
 <body>
 
-<div id="boot">setting the pages&hellip;</div>
-<div id="book" hidden></div>
-<div id="bar" hidden>
-  <button id="prev" aria-label="Previous page">&larr;</button>
-  <span id="folio">&nbsp;</span>
-  <button id="next" aria-label="Next page">&rarr;</button>
-</div>
+<div id="boot">binding the pages</div>
+
+<main id="scene" hidden aria-label="The book">
+  <div id="stage">
+    <div id="book">
+      <div id="contact" class="prop"></div>
+      <div id="board" class="prop"></div>
+      <div id="stkL" class="prop stack stack--l"></div>
+      <div id="stkR" class="prop stack stack--r"></div>
+      <div id="stkB" class="prop stack stack--b"></div>
+      <!-- #mount is created per build and lives here -->
+    </div>
+  </div>
+</main>
+
 <div id="hint" hidden>drag a page corner, or use the arrow keys</div>
+
+<footer id="bar" hidden>
+  <button class="btn" id="tocBtn" aria-haspopup="true">☰ <span class="label">Contents</span></button>
+  <button class="btn" id="prev" aria-label="Previous page">←</button>
+  <div id="track" role="slider" tabindex="0" aria-valuemin="0" aria-label="Reading position"><div id="fill"></div><div id="knob"></div></div>
+  <span id="folio">&nbsp;</span>
+  <button class="btn" id="next" aria-label="Next page">→</button>
+  <button class="btn" id="themeBtn" aria-label="Change theme">◐</button>
+  <button class="btn" id="fullBtn" aria-label="Fullscreen">⤢</button>
+</footer>
+
+<nav id="toc" aria-hidden="true">
+  <div id="toc-panel">
+    <h4>Unfair to Everyone</h4>
+    <p class="sub">Manuchehr Qoriev</p>
+    <ol id="toc-list"></ol>
+    <dl id="keys">
+      <dt>&larr; &rarr;</dt><dd>turn a page</dd>
+      <dt>C</dt><dd>contents</dd>
+      <dt>T</dt><dd>day or night</dd>
+      <dt>F</dt><dd>fullscreen</dd>
+      <dt>Home End</dt><dd>cover, or the last page</dd>
+    </dl>
+  </div>
+</nav>
 
 <div id="src">
 <!--BOOK-->
 </div>
-<div id="stage"></div>
+<div id="measure"></div>
 
 <script src="vendor/page-flip.browser.js"></script>
 <script>
 (function(){
-  var src=document.getElementById('src'), stage=document.getElementById('stage');
-  var bookEl=document.getElementById('book'), boot=document.getElementById('boot');
-  var mountEl=null;
-  var bar=document.getElementById('bar'), hint=document.getElementById('hint');
-  var folio=document.getElementById('folio');
-  var prev=document.getElementById('prev'), next=document.getElementById('next');
-  var flip=null, W=0, H=0, PAD=0;
+"use strict";
+var $=function(id){ return document.getElementById(id); };
+var src=$('src'), measure=$('measure'), bookEl=$('book'), stageEl=$('stage');
+var boot=$('boot'), scene=$('scene'), bar=$('bar'), hint=$('hint');
+var folio=$('folio'), prev=$('prev'), next=$('next');
+var track=$('track'), fill=$('fill'), knob=$('knob');
+var tocEl=$('toc'), tocList=$('toc-list'), tocBtn=$('tocBtn');
+var board=$('board'), stkL=$('stkL'), stkR=$('stkR'), stkB=$('stkB'), contact=$('contact');
 
-  /* ---------------- 1. geometry ---------------- */
-  function geometry(){
-    var portrait = innerWidth < 760;
-    var maxW = portrait ? innerWidth-32 : (innerWidth-72)/2;
-    var maxH = innerHeight-132;
-    // a page is taller than it is wide, the way a printed book is
-    W = Math.min(430, maxW, maxH*0.70);
-    H = Math.min(maxH, W/0.70);
-    W = Math.round(W); H = Math.round(H);
-    PAD = Math.round(Math.max(26, W*0.105));
-    document.documentElement.style.setProperty('--pad', PAD+'px');
-    document.documentElement.style.setProperty('--fs',
-      Math.max(13.5, Math.min(17, W/25.5)).toFixed(2)+'px');
-    return portrait;
-  }
+var flip=null, mountEl=null, marks=[], W=0, H=0, PAD=0;
+var OVERHANG=7, MAXSTACK=21;
+var KEY='unfair-to-everyone:page';
+var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------------- 2. paginate ----------------
-     StPageFlip needs discrete, equally sized page elements, so the text has to
-     be measured and broken here instead of by the browser's own column code.
-     Blocks are flattened to atoms (leaf blocks, remembering which blockquote
-     or list they came from) and poured into pages one at a time. An atom that
-     will not fit alone is trimmed word by word and the remainder carried over,
-     which keeps inline markup intact. */
+/* ══ 1. geometry ══════════════════════════════════════════════════ */
+function geometry(){
+  var portrait = innerWidth < 780;
+  var room = MAXSTACK*2 + OVERHANG*2 + 26;          // the object is wider than its pages
+  var maxW = portrait ? innerWidth-44-room : (innerWidth-56-room)/2;
+  var maxH = innerHeight-150;
+  W = Math.min(432, maxW, maxH*0.702);
+  H = Math.min(maxH, W/0.702);
+  W = Math.max(210, Math.round(W)); H = Math.round(H);
+  PAD = Math.round(Math.max(24, W*0.105));
+  var css=document.documentElement.style;
+  css.setProperty('--pad', PAD+'px');
+  css.setProperty('--fs', Math.max(13, Math.min(17.2, W/25.6)).toFixed(2)+'px');
+  return portrait;
+}
 
-  function newPage(cls){
-    var p=document.createElement('div');
-    p.className='page'+(cls?' '+cls:'');
-    p.style.width=W+'px'; p.style.height=H+'px';
-    var c=document.createElement('div'); c.className='page-content';
-    p.appendChild(c);
-    return p;
+/* ══ 2. pagination ════════════════════════════════════════════════
+   StPageFlip needs discrete, equally sized page elements, so the text is
+   measured and broken here rather than by the browser's own column code.
+   Blocks are flattened into atoms (leaf blocks that remember which
+   blockquote or list they came from) and poured into pages one at a time.
+   An atom that will not fit is trimmed node by node, not by string, so
+   italics, links and drafting marks survive a break. */
+
+function newPage(cls){
+  var p=document.createElement('div');
+  p.className='page'+(cls?' '+cls:'');
+  p.style.width=W+'px'; p.style.height=H+'px';
+  var c=document.createElement('div'); c.className='page-content';
+  p.appendChild(c);
+  return p;
+}
+function overflowing(page){
+  var c=page.firstChild;
+  return c.scrollHeight > c.clientHeight + 1;
+}
+function trimTail(node){
+  var last=node.lastChild;
+  while(last && last.nodeType===3 && !last.data.trim()){
+    node.removeChild(last); last=node.lastChild;
   }
-  function overflowing(page){
-    var c=page.firstChild;
-    return c.scrollHeight > c.clientHeight + 1;
-  }
-  // remove and return the last word (or last element) of a node
-  function trimTail(node){
-    var last=node.lastChild;
-    while(last && last.nodeType===3 && !last.data.trim()){
-      node.removeChild(last); last=node.lastChild;
-    }
-    if(!last) return null;
-    if(last.nodeType===3){
-      var m=last.data.match(/^([\s\S]*?)(\S+\s*)$/);
-      if(m && m[1].trim()){ last.data=m[1]; return document.createTextNode(m[2]); }
-      node.removeChild(last); return last;
-    }
+  if(!last) return null;
+  if(last.nodeType===3){
+    var m=last.data.match(/^([\s\S]*?)(\S+\s*)$/);
+    if(m && m[1].trim()){ last.data=m[1]; return document.createTextNode(m[2]); }
     node.removeChild(last); return last;
   }
-  function splitToFit(node, page){
-    var tail=[], guard=4000;
-    while(overflowing(page) && guard--){
-      var t=trimTail(node);
-      if(!t) break;
-      tail.unshift(t);
-    }
-    if(!tail.length) return null;
-    var carry=node.cloneNode(false);
-    tail.forEach(function(n){ carry.appendChild(n); });
-    return carry;
+  node.removeChild(last); return last;
+}
+function splitToFit(node, page){
+  var tail=[], guard=4000;
+  while(overflowing(page) && guard--){
+    var t=trimTail(node);
+    if(!t) break;
+    tail.unshift(t);
   }
-  function atomize(section){
-    var out=[];
-    (function walk(parent, chain){
-      Array.prototype.slice.call(parent.children).forEach(function(el){
-        if(/^(BLOCKQUOTE|UL|OL)$/.test(el.tagName)) walk(el, chain.concat([el]));
-        else out.push({node:el, chain:chain});
-      });
-    })(section, []);
-    return out;
+  if(!tail.length) return null;
+  var carry=node.cloneNode(false);
+  tail.forEach(function(n){ carry.appendChild(n); });
+  return carry;
+}
+function atomize(section){
+  var out=[];
+  (function walk(parent, chain){
+    Array.prototype.slice.call(parent.children).forEach(function(el){
+      if(/^(BLOCKQUOTE|UL|OL)$/.test(el.tagName)) walk(el, chain.concat([el]));
+      else out.push({node:el, chain:chain});
+    });
+  })(section, []);
+  return out;
+}
+
+function paginate(){
+  var pages=[];
+  measure.textContent='';
+  var wrapMap=new Map();
+  var olDone=new Map();
+  function finished(node, chain){
+    var owner=chain[chain.length-1];
+    if(owner && owner.tagName==='OL' && node.tagName==='LI')
+      olDone.set(owner, (olDone.get(owner)||0)+1);
   }
 
-  function paginate(){
-    var pages=[];
-    stage.textContent='';
-    var wrapMap=new Map();
-    // source <ol> -> how many of its items have been finished on earlier pages,
-    // so a list broken across a spread carries on numbering instead of restarting
-    var olDone=new Map();
-    function finished(node, chain){          // an item that ended on this page
-      var owner=chain[chain.length-1];
-      if(owner && owner.tagName==='OL' && node.tagName==='LI')
-        olDone.set(owner, (olDone.get(owner)||0)+1);
+  Array.prototype.slice.call(src.children).forEach(function(section){
+    var display = /title-page|part-page/.test(section.className);
+    var page = newPage(display ? 'page--display' : '');
+    measure.appendChild(page); pages.push(page);
+    wrapMap = new Map();
+
+    if(display){
+      Array.prototype.slice.call(section.cloneNode(true).children)
+        .forEach(function(n){ page.firstChild.appendChild(n); });
+      return;
     }
 
-    Array.prototype.forEach.call(src.children, function(section){
-      var display = /title-page|part-page/.test(section.className);
-      var page = newPage(display ? 'page--display' : '');
-      stage.appendChild(page); pages.push(page);
-      wrapMap = new Map();
+    atomize(section).forEach(function(atom){
+      var queue=[atom.node.cloneNode(true)];
+      while(queue.length){
+        var node=queue.shift();
+        var host=page.firstChild;
+        atom.chain.forEach(function(w){
+          var clone=wrapMap.get(w);
+          if(!clone || !page.contains(clone)){
+            clone=document.createElement(w.tagName);
+            clone.className=w.className;
+            if(w.tagName==='OL') clone.setAttribute('start', (olDone.get(w)||0)+1);
+            host.appendChild(clone);
+            wrapMap.set(w, clone);
+          }
+          host=clone;
+        });
+        host.appendChild(node);
 
-      if(display){ // never split a display page, it is one spread by design
-        // snapshot first: .children is live, appending elsewhere reindexes it
-        Array.prototype.slice.call(section.cloneNode(true).children)
-          .forEach(function(n){ page.firstChild.appendChild(n); });
-        return;
-      }
+        if(!overflowing(page)){ finished(node, atom.chain); continue; }
 
-      atomize(section).forEach(function(atom){
-        var queue=[atom.node.cloneNode(true)];
-        while(queue.length){
-          var node=queue.shift();
-          var host=page.firstChild;
+        var carry=splitToFit(node, page);
+        var kept = node.textContent.trim().length > 0 && !overflowing(page);
+        if(!kept){
+          if(carry){
+            while(carry.firstChild) node.appendChild(carry.firstChild);
+            carry=null;
+          }
+          node.parentNode.removeChild(node);
           atom.chain.forEach(function(w){
-            var clone=wrapMap.get(w);
-            if(!clone || !page.contains(clone)){
-              clone=document.createElement(w.tagName);
-              clone.className=w.className;
-              if(w.tagName==='OL') clone.setAttribute('start', (olDone.get(w)||0)+1);
-              host.appendChild(clone);
-              wrapMap.set(w, clone);
-            }
-            host=clone;
+            var c=wrapMap.get(w);
+            if(c && !c.firstChild && c.parentNode) c.parentNode.removeChild(c);
           });
-          host.appendChild(node);
-
-          if(!overflowing(page)){ finished(node, atom.chain); continue; }
-
-          // does not fit: try to keep the part that does, carry the rest
-          var carry=splitToFit(node, page);
-          var kept = node.textContent.trim().length > 0 && !overflowing(page);
-          if(!kept){                       // nothing of it fits here at all
-            if(carry){                     // put it back together
-              while(carry.firstChild) node.appendChild(carry.firstChild);
-              carry=null;
-            }
-            node.parentNode.removeChild(node);
-            // drop wrappers this page opened but never filled
-            atom.chain.forEach(function(w){
-              var c=wrapMap.get(w);
-              if(c && !c.firstChild && c.parentNode) c.parentNode.removeChild(c);
-            });
-            if(page.firstChild.firstChild){ // start a fresh page and retry
-              page=newPage(''); stage.appendChild(page); pages.push(page);
-              wrapMap=new Map();
-              queue.unshift(node);
-              continue;
-            }
-            host.appendChild(node);        // page already empty, let it ride
+          if(page.firstChild.firstChild){
+            page=newPage(''); measure.appendChild(page); pages.push(page);
+            wrapMap=new Map();
+            queue.unshift(node);
             continue;
           }
-          if(carry){
-            if(node.tagName==='LI') carry.dataset.carry='1';
-            page=newPage(''); stage.appendChild(page); pages.push(page);
-            wrapMap=new Map();
-            queue.unshift(carry);
-          } else {
-            finished(node, atom.chain);
-          }
+          host.appendChild(node);
+          continue;
         }
-      });
+        if(carry){
+          if(node.tagName==='LI') carry.dataset.carry='1';
+          page=newPage(''); measure.appendChild(page); pages.push(page);
+          wrapMap=new Map();
+          queue.unshift(carry);
+        } else {
+          finished(node, atom.chain);
+        }
+      }
     });
-
-    // the title page becomes a hard cover, plus a hard back cover to close on
-    pages[0].classList.add('page--cover');
-    pages[0].classList.remove('page--display');
-    var back=newPage('page--cover'); stage.appendChild(back); pages.push(back);
-    // spreads only line up if the interior has an even number of leaves
-    if(pages.length % 2) { var blank=newPage(''); stage.insertBefore(blank, back); pages.splice(pages.length-1,0,blank); }
-
-    // folios, cover and back cover unnumbered
-    pages.forEach(function(p,i){
-      p.dataset.density = p.classList.contains('page--cover') ? 'hard' : 'soft';
-      if(p.dataset.density==='hard') return;
-      var f=document.createElement('div');
-      f.className='folio'; f.textContent=i;
-      p.appendChild(f);
-    });
-    return pages;
-  }
-
-  /* ---------------- 3. mount ---------------- */
-  function paint(){
-    if(!flip) return;
-    var i=flip.getCurrentPageIndex(), n=flip.getPageCount();
-    folio.textContent = i===0 ? 'cover' : (i>=n-1 ? 'the end' : i+' / '+(n-2));
-    prev.disabled = i<=0;
-    next.disabled = i>=n-1;
-  }
-  function mount(keep){
-    var portrait=geometry();
-    var pages=paginate();
-
-    if(flip){ try{ flip.destroy(); }catch(e){} flip=null; }
-    bookEl.textContent='';                 // in case destroy left anything
-    mountEl=document.createElement('div');
-    mountEl.id='mount';
-    bookEl.appendChild(mountEl);
-    pages.forEach(function(p){ mountEl.appendChild(p); });
-
-    // StPageFlip picks portrait whenever the container is narrower than two
-    // pages (calculateBoundsRect: `e < 2*h && usePortrait`), so the spread
-    // only appears if the container is sized for it explicitly.
-    mountEl.style.width  = (portrait ? W : W*2)+'px';
-    mountEl.style.height = H+'px';
-    flip = new St.PageFlip(mountEl, {
-      width:W, height:H, size:'fixed',
-      showCover:true, usePortrait:true, autoSize:false,
-      maxShadowOpacity:.45, flippingTime:680,
-      mobileScrollSupport:false, swipeDistance:24,
-      startPage: Math.min(keep||0, pages.length-1)
-    });
-    flip.loadFromHTML(mountEl.querySelectorAll('.page'));
-    flip.on('flip', paint);
-    flip.on('changeOrientation', paint);
-    boot.hidden=true; bookEl.hidden=false; bar.hidden=false; hint.hidden=false;
-    paint();
-  }
-
-  prev.onclick=function(){ flip && flip.flipPrev() };
-  next.onclick=function(){ flip && flip.flipNext() };
-  addEventListener('keydown', function(e){
-    if(!flip) return;
-    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){ e.preventDefault(); flip.flipNext(); }
-    if(e.key==='ArrowLeft' ||e.key==='PageUp'){ e.preventDefault(); flip.flipPrev(); }
-  });
-  var t;
-  addEventListener('resize', function(){
-    clearTimeout(t);
-    t=setTimeout(function(){ mount(flip?flip.getCurrentPageIndex():0); }, 220);
   });
 
-  // web fonts change every measurement, so paginate only once they are in
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ mount(0); });
-  else mount(0);
+  // the title page is the front board; a back board closes the book
+  pages[0].classList.add('page--cover');
+  pages[0].classList.remove('page--display');
+  var back=newPage('page--cover'); measure.appendChild(back); pages.push(back);
+  // spreads only line up if the interior holds an even number of leaves
+  if(pages.length % 2){
+    var blank=newPage('');
+    measure.insertBefore(blank, back);
+    pages.splice(pages.length-1, 0, blank);
+  }
+
+  marks=[];
+  pages.forEach(function(p,i){
+    p.dataset.density = p.classList.contains('page--cover') ? 'hard' : 'soft';
+    var h2=p.querySelector('h2');
+    if(h2) marks.push({ title:h2.textContent, page:i,
+                        part:p.classList.contains('page--display') });
+    if(p.dataset.density==='hard') return;
+    var f=document.createElement('div');
+    f.className='folio'; f.textContent=i;
+    p.appendChild(f);
+  });
+  return pages;
+}
+
+/* ══ 3. the physical object ═══════════════════════════════════════
+   The paper stacks and cover boards are sized from where the pages
+   actually are, measured after every turn. Their thickness tracks the
+   reading position, which is how a real book tells you how far in you
+   are before you look at a page number. */
+
+function furniture(){
+  if(!flip || !mountEl) return;
+
+  /* Derived, never measured. An earlier version read getBoundingClientRect on
+     the pages, but the book is under a perspective and is itself translated to
+     stay centred: shifting it changes the projection, which changes the next
+     measurement, which changes the shift. That loop tore the covers away from
+     the pages. Layout geometry is known exactly, so use it. */
+  var portrait = flip.getOrientation() === 'portrait';
+  var i = flip.getCurrentPageIndex(), n = flip.getPageCount();
+  var mountW = portrait ? W : W*2;
+  var bx, bw;
+  if(portrait)        { bx = 0; bw = W; }        // one leaf, always centred
+  else if(i === 0)    { bx = W; bw = W; }        // shut: the front board sits right
+  else if(i === n-1)  { bx = 0; bw = W; }        // shut at the back: it sits left
+  else                { bx = 0; bw = W*2; }      // open on a spread
+  var by = 0, bh = H;
+
+  // Thickness tracks how far in you are. This is the cue that makes it read as
+  // a book before you ever look at a page number.
+  var p  = n>1 ? i/(n-1) : 0;
+  var lt = Math.round(1 + (MAXSTACK-1)*p);
+  var rt = Math.round(1 + (MAXSTACK-1)*(1-p));
+  var bt = Math.round((lt+rt)/2);
+
+  stkL.style.cssText='left:'+(bx-lt)+'px; top:'+(by+3)+'px; width:'+lt+'px; height:'+(bh-3)+'px';
+  stkR.style.cssText='left:'+(bx+bw)+'px; top:'+(by+3)+'px; width:'+rt+'px; height:'+(bh-3)+'px';
+  stkB.style.cssText='left:'+(bx+2)+'px; top:'+(by+bh)+'px; width:'+(bw-4)+'px; height:'+bt+'px';
+  board.style.cssText=
+    'left:'+(bx-lt-OVERHANG)+'px; top:'+(by-OVERHANG)+'px;'+
+    'width:'+(bw+lt+rt+OVERHANG*2)+'px; height:'+(bh+bt+OVERHANG*2)+'px';
+
+  var cw=bw+lt+rt+OVERHANG*2;
+  contact.style.cssText=
+    'left:'+(bx-lt-OVERHANG-16)+'px; top:'+(by+bh+bt+OVERHANG-8)+'px;'+
+    'width:'+(cw+32)+'px; height:'+Math.round(H*0.11)+'px';
+
+  // A shut book fills half the spread. Slide the object so the half that is
+  // actually there sits in the middle of the screen.
+  bookEl.style.setProperty('--shift', Math.round(mountW/2 - (bx + bw/2))+'px');
+}
+
+/* ══ 4. chrome ════════════════════════════════════════════════════ */
+function paint(){
+  if(!flip) return;
+  var i=flip.getCurrentPageIndex(), n=flip.getPageCount();
+  var last=n-1, body=Math.max(1,n-2);
+  folio.textContent = i===0 ? 'cover' : (i>=last ? 'the end' : i+' / '+body);
+  prev.disabled = i<=0;
+  next.disabled = i>=last;
+  var pct = last>0 ? (i/last)*100 : 0;
+  fill.style.width = pct+'%';
+  knob.style.left = pct+'%';
+  track.setAttribute('aria-valuenow', i);
+  track.setAttribute('aria-valuemax', last);
+  furniture();
+  remember(i);
+  var active=null;
+  marks.forEach(function(m){ if(m.page<=i+1) active=m; });
+  Array.prototype.slice.call(tocList.querySelectorAll('button')).forEach(function(b){
+    b.setAttribute('aria-current', active && +b.dataset.page===active.page ? 'true':'false');
+  });
+}
+function remember(i){
+  try{ localStorage.setItem(KEY, String(i)); }catch(e){}
+}
+function recall(){
+  try{ var v=parseInt(localStorage.getItem(KEY),10); return isNaN(v)?0:v; }catch(e){ return 0; }
+}
+function buildToc(){
+  tocList.textContent='';
+  marks.forEach(function(m){
+    var li=document.createElement('li');
+    if(m.part) li.className='--part';
+    var b=document.createElement('button');
+    b.dataset.page=m.page;
+    b.innerHTML='<span class="n">'+(m.part?'':m.page)+'</span><span class="t"></span>';
+    b.querySelector('.t').textContent=m.title;
+    b.onclick=function(){ closeToc(); flip && flip.flip(m.page); };
+    li.appendChild(b); tocList.appendChild(li);
+  });
+}
+function openToc(){ tocEl.classList.add('--open'); tocEl.setAttribute('aria-hidden','false'); }
+function closeToc(){ tocEl.classList.remove('--open'); tocEl.setAttribute('aria-hidden','true'); }
+
+/* ══ 5. mount ═════════════════════════════════════════════════════ */
+function mount(startAt){
+  var portrait=geometry();
+  var pages=paginate();
+
+  // PageFlip.destroy() calls block.remove() on the element it was given, so it
+  // gets a disposable child and #book itself always survives a rebuild.
+  if(flip){ try{ flip.destroy(); }catch(e){} flip=null; }
+  if(mountEl && mountEl.parentNode) mountEl.parentNode.removeChild(mountEl);
+  mountEl=document.createElement('div');
+  mountEl.id='mount';
+  bookEl.appendChild(mountEl);
+  pages.forEach(function(p){ mountEl.appendChild(p); });
+
+  // StPageFlip falls back to portrait whenever the container is narrower than
+  // two pages (calculateBoundsRect: `e < 2*h && usePortrait`), so the spread
+  // only appears if the container is sized for it explicitly.
+  mountEl.style.width  = (portrait ? W : W*2)+'px';
+  mountEl.style.height = H+'px';
+
+  flip = new St.PageFlip(mountEl, {
+    width:W, height:H, size:'fixed',
+    showCover:true, usePortrait:true, autoSize:false,
+    maxShadowOpacity:.5, flippingTime: calm ? 1 : 720,
+    mobileScrollSupport:false, swipeDistance:24,
+    startPage: Math.max(0, Math.min(startAt||0, pages.length-1))
+  });
+  flip.loadFromHTML(mountEl.querySelectorAll('.page'));
+  flip.on('flip', paint);
+  flip.on('changeState', function(e){
+    var state = e && e.data;
+    if(state && state !== 'read') bookEl.style.setProperty('--shift','0px');
+    else furniture();
+  });
+  flip.on('changeOrientation', function(){ furniture(); paint(); });
+
+  buildToc();
+  boot.hidden=true; scene.hidden=false; bar.hidden=false; hint.hidden=false;
+  paint();
+  requestAnimationFrame(furniture);
+}
+
+/* ══ 6. input ═════════════════════════════════════════════════════ */
+function used(){ hint.classList.add('--gone'); }
+prev.onclick=function(){ used(); flip && flip.flipPrev(); };
+next.onclick=function(){ used(); flip && flip.flipNext(); };
+tocBtn.onclick=function(){ used(); tocEl.classList.contains('--open') ? closeToc() : openToc(); };
+tocEl.onclick=function(e){ if(e.target===tocEl) closeToc(); };
+
+$('fullBtn').onclick=function(){
+  if(document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+};
+$('themeBtn').onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  var nextTheme = cur==='dark' ? 'light' : cur==='light' ? '' : 'dark';
+  if(nextTheme) document.documentElement.setAttribute('data-theme', nextTheme);
+  else document.documentElement.removeAttribute('data-theme');
+  try{ localStorage.setItem(KEY+':theme', nextTheme); }catch(e){}
+};
+(function(){
+  try{
+    var th=localStorage.getItem(KEY+':theme');
+    if(th) document.documentElement.setAttribute('data-theme', th);
+  }catch(e){}
+})();
+
+function scrub(e){
+  if(!flip) return;
+  var r=track.getBoundingClientRect();
+  var f=Math.max(0, Math.min(1, (e.clientX-r.left)/r.width));
+  flip.flip(Math.round(f*(flip.getPageCount()-1)));
+}
+track.onclick=function(e){ used(); scrub(e); };
+track.onkeydown=function(e){
+  if(e.key==='ArrowRight'){ e.preventDefault(); flip && flip.flipNext(); }
+  if(e.key==='ArrowLeft'){ e.preventDefault(); flip && flip.flipPrev(); }
+};
+
+addEventListener('keydown', function(e){
+  if(!flip) return;
+  if(e.key==='Escape'){ closeToc(); return; }
+  if(e.metaKey||e.ctrlKey||e.altKey) return;
+  var k=e.key.toLowerCase();
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){ e.preventDefault(); used(); flip.flipNext(); }
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); used(); flip.flipPrev(); }
+  else if(e.key==='Home'){ e.preventDefault(); flip.flip(0); }
+  else if(e.key==='End'){ e.preventDefault(); flip.flip(flip.getPageCount()-1); }
+  else if(k==='c'){ used(); tocEl.classList.contains('--open') ? closeToc() : openToc(); }
+  else if(k==='t'){ $('themeBtn').click(); }
+  else if(k==='f'){ $('fullBtn').click(); }
+});
+
+/* the book leans a few degrees toward the cursor. Small on purpose: enough
+   to read as an object in a room, not enough to fight the text. */
+if(!calm){
+  var raf=0;
+  addEventListener('pointermove', function(e){
+    if(raf) return;
+    raf=requestAnimationFrame(function(){
+      raf=0;
+      var dx=(e.clientX/innerWidth - .5), dy=(e.clientY/innerHeight - .5);
+      var s=document.documentElement.style;
+      s.setProperty('--yaw', (dx*4.2).toFixed(2)+'deg');
+      s.setProperty('--roll', (-dx*0.5).toFixed(2)+'deg');
+      s.setProperty('--tilt', (4 - dy*2.6).toFixed(2)+'deg');
+      bookEl.classList.add('--live');
+    });
+  }, {passive:true});
+  addEventListener('pointerleave', function(){
+    bookEl.classList.remove('--live');
+    var s=document.documentElement.style;
+    s.setProperty('--yaw','0deg'); s.setProperty('--roll','0deg'); s.setProperty('--tilt','4deg');
+  });
+}
+
+var rt2;
+addEventListener('resize', function(){
+  clearTimeout(rt2);
+  rt2=setTimeout(function(){ mount(flip?flip.getCurrentPageIndex():recall()); }, 220);
+});
+
+// web fonts change every measurement, so paginate only once they have landed
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ mount(recall()); });
+else mount(recall());
 })();
 </script>
 </body>

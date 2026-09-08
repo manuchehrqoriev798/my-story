@@ -7,6 +7,16 @@ Open `index.html` in any browser. Drag a page corner to turn it, or use the
 arrow keys. No build step to read it, no install, and no network needed
 beyond the two web fonts.
 
+| Key | |
+|---|---|
+| `←` `→` | turn a page |
+| `C` | contents |
+| `T` | day or night |
+| `F` | fullscreen |
+| `Home` `End` | the cover, or the last page |
+
+It remembers where you stopped reading.
+
 ## The loop
 
 ```
@@ -35,6 +45,30 @@ markdown package, no npm.
 The page turning is [StPageFlip](https://github.com/Nodlik/StPageFlip) (MIT,
 zero dependencies, 44KB), vendored into `vendor/` rather than loaded from a
 CDN so a clone keeps working offline and cannot break when a CDN changes.
+
+### Why it is not WebGL
+
+A three.js book would be genuinely 3D, and every page would become a bitmap
+texture painted onto geometry. The text would stop being text: soft at high
+DPI and on zoom, unselectable, invisible to find-in-page and to screen
+readers. For a page nobody reads that is a fine trade. For a book it is a
+downgrade wearing an upgrade's clothes.
+
+So the pages stay real DOM text, and everything physical around them is CSS
+sized at runtime from the real page geometry:
+
+- **paper stacks** on both sides whose thickness tracks the reading position,
+  which is how a real book tells you how far in you are before you look at a
+  page number
+- **cover boards** overhanging the paper, with a spine and a blind-stamped rule
+- a **contact shadow**, so the book rests on something instead of floating
+- a slight **lean toward the cursor**, small enough not to fight the text
+- **paper grain** from one inline SVG, no image file and no request
+
+None of it is a picture of a book. The geometry is derived from layout values,
+never measured from the screen: the book sits under a perspective and is
+translated to stay centred, so measuring it would feed its own output back
+into itself.
 
 StPageFlip needs discrete, equally sized page elements, so the text is
 measured and broken into pages in `template.html` before the library ever

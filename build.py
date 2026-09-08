@@ -40,8 +40,11 @@ ORDER = [
     BOOK / "09-failure.md",
     BOOK / "10-name-and-time.md",
     BOOK / "11-tools.md",
-    BOOK / "12-part-three.md",
+    # The appendix belongs with Part Two, whose chapters were built from it.
+    # Part Three closes the book, because the design in Me/Book.md is that the
+    # book does not end on a page, it ends on a choice.
     BOOK / "90-sayings.md",
+    BOOK / "12-part-three.md",
 ]
 
 # Everything in inspiration/ is picked up by glob, sorted by filename, so a new
