@@ -21,7 +21,8 @@
     2019     ninth grade. The birthday
     2021     Sh. and J., learn English
     2022     coming to UCA
-    2023     L.A. Why we help each other
+    2022-24  Russia, the supermarket. Three summers
+    2022-24  L.A., met in Russia, in one of those summers
     2024     I. Egoistic on purpose
     2025     AGENTS.inc, from June, in year three of five
     2025     сапожник без сапог. The cobbler with no boots
@@ -149,23 +150,63 @@ then spend years making correct. ⟨Say here whether you had this before you
 came or only worked it out afterwards, because those are two different
 chapters.⟩
 
+## See You Next Year
+
+### Three summers, ⟨2022, 2023 and 2024⟩
+
+Prep year, freshman year, sophomore year. Every summer, Russia, the same
+supermarket. ⟨Which city. What the work was, the hours, who else was there.⟩
+
+⟨The years are worked out, not told, and worth one second of your attention.
+If the summer belonging to an academic year is the one at its end, the third
+lands in 2025, which is the summer you were already at AGENTS.inc. So they are
+read here as the summer before each year instead, and the summer before junior
+year is the one that broke the pattern. One word from you settles it.⟩
+
+After the first one I had decided I was never going back.
+
+On the last day the boss thanked me, and then said the other thing.
+
+> Thanks, Manu. See you next year.
+> — ⟨his initials⟩
+
+It is the most terrifying sentence I have ever heard. Nothing was meant by it.
+He was making a prediction and did not know he was making one, and he turned
+out to understand my situation better than I did.
+
+The year ended. I could not find work. I went back to the same supermarket.
+Then I did it a third time.
+
+⟨What the second arrival felt like, and the third. Whether he ever said
+anything about having been right.⟩
+
+**What it taught.** ⟨In your words. My draft, to argue with: deciding never to
+do something again is not a plan, it is a feeling, and a feeling does not book
+your summer. The way out has to be built during the year, while you are still
+inside the thing you want out of, because by June there is nothing left to
+choose between.⟩
+
 ## Why We Help Each Other
 
-### 2023
+### ⟨which of the three summers⟩
 
-L.A., a year into UCA.
+I met L.A. in Russia, in one of those summers, and I stayed at her house.
+⟨Which summer, and how you ended up under her roof.⟩
 
 She helped me understand the world. Why we should help each other, why it
 matters to live that way, and to help genuinely, without conditions on it.
 
-⟨One conversation, concrete. Where you were, what she actually said. This is
-the chapter that most needs a scene, because everything above is a summary,
-and a summary of a person is not a person.⟩
+⟨One conversation, concrete. Where you were in that house, what she actually
+said. This is the chapter that most needs a scene, because everything above is
+a summary, and a summary of a person is not a person.⟩
 
-**What it taught.** ⟨In your words. Worth knowing while you write it: the
-four of her sayings that reached Part Two are all about discipline and none
-about this. The most important thing she gave you never got written down,
-which is why it is a chapter here instead of a quotation there.⟩
+**What it taught.** ⟨In your words. Two things worth having in front of you
+while you write it. The first is that she did not explain unconditional help
+to a stranger working a supermarket job, she housed one, so the chapter has a
+demonstration in it already and does not need an argument. The second is that
+the four of her sayings that reached Part Two are all about discipline and
+none about this, which means the most important thing she gave you never got
+written down anywhere.⟩
 
 ## Egoistic On Purpose
 
@@ -191,10 +232,20 @@ true when he said it.⟩
 
 AGENTS.inc, from June, remote, in year three of a five year degree.
 
+This is the summer the supermarket did not happen. Three of them had ended the
+same way and the fourth did not, and the difference was not luck arriving late,
+it was work that existed before June did.
+
+They helped me a lot, and I got better at it, and then better than that.
+
 ⟨How that changed things. What it cost, what it bought, and whether it was a
 decision you made or something that happened and then was simply true.⟩
 
-**What it taught.** ⟨⟩
+⟨Who at AGENTS.inc, and initials for them, same rule as everyone else.⟩
+
+**What it taught.** ⟨In your words. The pair to *See You Next Year*: that
+chapter is the loop, this one is the year it broke, and the two only mean
+something read together.⟩
 
 ## The Cobbler With No Boots
 
