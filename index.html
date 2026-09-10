@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
-<title>Unfair to Everyone</title>
+<title>Don’t Choose the Right Choice, Make the Choice Right</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="vendor/page-flip.css">
 <style>
 /* ══════════════════════════════════════════════════════════════════════
-   Unfair to Everyone
+   Don’t Choose the Right Choice, Make the Choice Right
 
    The pages are real DOM text, so they stay crisp, selectable and
    searchable. Everything physical around them (paper stacks, cover
@@ -182,18 +182,15 @@ body{
   overflow:visible; text-align:center;
   left:calc(var(--pad)*1.15); right:calc(var(--pad)*1.15);
 }
-/* a blind-stamped rule, the way a cover is actually decorated */
-.page--cover .page-content::before{
-  content:""; position:absolute; inset:14px; border:1px solid rgba(242,231,212,.22);
-  border-radius:2px; pointer-events:none;
-}
+/* No frame, no rules. A line drawn on a cover reads as a border on a screen,
+   not as a blind stamp on board: the title and the name carry it alone. */
 .page--cover h1{
-  font-size:2.35em; line-height:1.08; margin:0 0 .16em; font-weight:500;
+  font-size:2em; line-height:1.14; font-weight:500;
   letter-spacing:.005em; text-shadow:0 1px 0 rgba(0,0,0,.45);
 }
 .page--cover h3{
   font-family:var(--sans); font-size:.58em; letter-spacing:.26em;
-  text-transform:uppercase; opacity:.92; font-weight:500; margin:.9em 0;
+  text-transform:uppercase; opacity:.92; font-weight:500;
 }
 .page--cover p{ text-indent:0; text-align:center; font-size:.85em; opacity:.7 }
 .page--cover hr.rule{ background:currentColor; opacity:.28 }
@@ -219,6 +216,14 @@ body{
    only looked right in the dark one because --ink-soft happens to be light
    there. This has to sit after .page h3, not next to the other cover rules. */
 .page--cover h3{ color:inherit }
+/* Same trap, same cure, for the geometry: .page h1 and .page h3 align left
+   and .page p carries a bottom margin, all of which are one class and one
+   type, exactly what a .page--cover rule is, so only source order decides.
+   A cover is centred and its three parts are spaced by hand. */
+.page--cover h1,.page--cover h3{ text-align:center }
+.page--cover h1{ margin:0 0 .1em }
+.page--cover h3{ margin:1.15em 0 0 }
+.page--cover p{ margin:2.4em 0 0 }
 .page h2+h3{ margin-top:.24em }
 /* A chapter opens with a drop cap, as a set book does. Anchored to h2 so it
    fires once per chapter, on the first prose paragraph after the epigraph,
@@ -450,7 +455,7 @@ body{
 
 <nav id="toc" aria-hidden="true">
   <div id="toc-panel">
-    <h4>Unfair to Everyone</h4>
+    <h4>Don’t Choose the Right Choice, Make the Choice Right</h4>
     <p class="sub">Manuchehr Qoriev</p>
     <ol id="toc-list"></ol>
     <dl id="keys">
@@ -467,12 +472,9 @@ body{
 
 <div id="src">
 <section class="title-page" data-src="00-title.md">
-<h1>Unfair to Everyone</h1>
+<h1>Don’t Choose the Right Choice, Make the Choice Right</h1>
 <h3>A life, and what it taught</h3>
 <p>Manuchehr Qoriev</p>
-<hr class="rule">
-<p><em>I share thoughts and information here. If someone chooses to blindly follow whatever they hear or read, that is not on the person who shared it. At that point, it is natural selection.</em></p>
-<p><span class="slot">working title: taken from saying 1. Replace it if you have a better one.</span></p>
 </section>
 
 <section class="part-page" data-src="01-part-one.md">

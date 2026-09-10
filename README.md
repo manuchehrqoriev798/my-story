@@ -1,7 +1,10 @@
-# Unfair to Everyone
+# Don’t Choose the Right Choice, Make the Choice Right
 
 A book by Manuchehr Qoriev, and the small amount of code that renders it as a
 book: a two page spread you turn with the arrow keys.
+
+The title is saying 2 of his own, and it is the thesis: a life is not a search
+for the correct option, it is the work you put in after the option is taken.
 
 Open `index.html` in any browser. Click a page to turn it, drag a corner to
 pull it across slowly, or use the arrow keys. No build step to read it, no install, and no network needed
@@ -79,6 +82,21 @@ and any atom that will not fit is trimmed word by word with the remainder
 carried to the next page, which keeps italics, links and drafting marks
 intact across a break.
 
+## How to write in it
+
+```
+1. open key-points.md
+2. write under the year it happened, in your own words, mess is fine
+3. end the chapter with the one line it taught you
+4. python3 build.py     # writes index.html
+5. open index.html      # read it back
+```
+
+Anything you cannot write yet, wrap in `⟨angle brackets⟩` and it shows up
+orange in the book instead of quietly becoming invented. Private, unfinished
+material goes in `inspiration/`, which never reaches GitHub. Nothing else to
+learn: no front matter, no flags, no build modes.
+
 ## The file you keep adding to
 
 **`key-points.md`.** Every `## ` heading in it becomes a chapter of Part One.
@@ -137,7 +155,6 @@ move a chapter, add a file to `book/` and put it in that list.
 
 ## Still open
 
-- Title. *Unfair to Everyone* is taken from saying 1 and is a working title.
 - Part One. The chapters exist and the years mostly do not. Nine `⟨year⟩`
   marks in `key-points.md` are the shortest path to a real Part One.
 - Part Three: how many paths, what each represents, what the exercise is, and
