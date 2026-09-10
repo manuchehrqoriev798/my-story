@@ -212,6 +212,13 @@ body{
   text-transform:uppercase; color:var(--ink-soft); font-weight:500;
   margin:1.5em 0 .5em;
 }
+/* .page h3 above paints subtitles in --ink-soft, which is ink for paper, and
+   it has exactly the same specificity as .page--cover h3, one class and one
+   type each, so source order decides and the paper rule was winning. The
+   cover is not paper: grey on brown measured 1.48:1 in the light theme, and
+   only looked right in the dark one because --ink-soft happens to be light
+   there. This has to sit after .page h3, not next to the other cover rules. */
+.page--cover h3{ color:inherit }
 .page h2+h3{ margin-top:.24em }
 /* A chapter opens with a drop cap, as a set book does. Anchored to h2 so it
    fires once per chapter, on the first prose paragraph after the epigraph,
@@ -250,6 +257,23 @@ body{
 .slot{
   font-family:var(--sans); font-size:.76em; font-style:normal;
   color:var(--accent); border-bottom:1px dotted var(--accent); padding:0 .12em;
+}
+/* A mark alone in its own paragraph is a note about the book, not a gap
+   inside a sentence. The dotted underline is an inline device: on a wrapped
+   standalone line it tracks the line boxes, so it breaks mid phrase and reads
+   as damage rather than as a mark. Standalone marks become quiet blocks. */
+.slot:only-child{
+  display:block; border-bottom:0; margin:.3em 0;
+  padding:.06em 0 .06em .8em; border-left:1px solid var(--accent);
+  font-size:.72em; line-height:1.62; opacity:.88;
+}
+/* On the cover and the part pages everything is centred, so a left rule would
+   hang off the axis. A hairline above does the same job on the centre line. */
+.page--cover .slot:only-child,
+.page--display .slot:only-child{
+  border-left:0; border-top:1px solid currentColor; text-align:center;
+  padding:1.15em 0 0; margin:2em auto 0; max-width:30ch;
+  font-size:.66em; letter-spacing:.015em; opacity:.4;
 }
 .page--display .page-content{
   display:flex; flex-direction:column; justify-content:center; text-align:center;
