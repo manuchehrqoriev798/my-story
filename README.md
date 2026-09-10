@@ -84,23 +84,29 @@ intact across a break.
 **`key-points.md`.** Every `## ` heading in it becomes a chapter of Part One.
 Add one heading per real turning point, then run `python3 build.py`.
 
-A turning point is a fork, not a year. If nothing looked different
-afterwards, it is not a chapter, it is a date. The file carries the entry
-template in a comment at the top.
+Part One runs childhood to now, ordered by year, and **every chapter ends
+with the one thing it taught**. That closing line is what makes it a learning
+and not a diary. A chapter is still a fork rather than a date: if nothing
+looked different afterwards it does not get one.
+
+The year is the address. Say what happened in a given year and it goes into
+that year's chapter, or opens a new one at the right position. The file
+carries a timeline ledger and the entry template in a comment at the top.
 
 ## What is in the book now
 
 | Part | State |
 |---|---|
-| Part One, The Life | **empty.** Waiting on `key-points.md` |
+| Part One, The Life | **scaffolded.** 9 chapters, childhood to now, mostly gaps waiting on you |
 | Part Two, The Lessons | **written.** 9 chapters, built from 42 sayings collected from 13 people |
 | The Sayings (appendix) | all 42, unedited, in the order they were written down |
 | Part Three, The Open Ending | designed, not built. Interactive, LLM behind it |
-| The Workshop (`draft.html` only) | seeded with the sources, waiting on your stories |
+| The Workshop (`draft.html` only) | 4 stories, 5 candidate sayings, a people roster, the sources |
 
-Part Two exists because the sayings were already written down. Part One does
-not exist yet because the turning points were not. That asymmetry is the
-whole current state of this project.
+Part Two is written because the sayings were already written down. Part One
+is a skeleton with real bones and no flesh: the chapters are named and placed
+in time, and what happened inside most of them is still only in your head.
+That asymmetry is the whole current state of this project.
 
 ## Drafting marks
 
@@ -132,7 +138,8 @@ move a chapter, add a file to `book/` and put it in that list.
 ## Still open
 
 - Title. *Unfair to Everyone* is taken from saying 1 and is a working title.
-- Part One, entirely.
+- Part One. The chapters exist and the years mostly do not. Nine `⟨year⟩`
+  marks in `key-points.md` are the shortest path to a real Part One.
 - Part Three: how many paths, what each represents, what the exercise is, and
   what the one thing every path converges to actually is. That last one is
   the real thesis of the book.

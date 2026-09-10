@@ -564,6 +564,15 @@ function paginate(){
     }
 
     atomize(section).forEach(function(atom){
+      // A chapter opens a page, the way a set book does. Part Two gets this
+      // for free because each chapter is its own file and so its own section.
+      // Part One is one file with many chapters, so without this a short
+      // chapter starts halfway down the previous one and the contents, which
+      // indexes one h2 per page, silently loses it.
+      if(atom.node.tagName==='H2' && page.firstChild.firstChild){
+        page=newPage(''); measure.appendChild(page); pages.push(page);
+        wrapMap=new Map();
+      }
       var queue=[atom.node.cloneNode(true)];
       while(queue.length){
         var node=queue.shift();

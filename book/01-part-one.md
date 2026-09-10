@@ -4,10 +4,16 @@
 
 ## The Life
 
-*The turning points, in the order they happened.*
+*Childhood to now, in order, and what each part of it taught.*
 
-Not a year-by-year account. A life is not its calendar. It is the small
-number of moments where the road actually forked, and everything after
-looked different because of which way you went.
+A life is not its calendar, so this is not a year by year account of one. It
+is the small number of moments where the road actually forked, laid out in
+the order they happened, so that reading them in sequence has the same shape
+as living them did.
 
-Every chapter that follows is one of those forks.
+Every chapter is one of those forks, and every chapter ends with the one
+thing it taught. Those lessons are mine, learned at the time, often wrongly
+and corrected later.
+
+Part Two is the other kind: lessons handed to me by other people, sorted by
+subject instead of by date.
