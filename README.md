@@ -3,8 +3,10 @@
 A book by Manuchehr Qoriev, and the small amount of code that renders it as a
 book: a two page spread you turn with the arrow keys.
 
-The title is saying 2 of his own, and it is the thesis: a life is not a search
-for the correct option, it is the work you put in after the option is taken.
+The title is the thesis: a life is not a search for the correct option, it is
+the work you put in after the option is taken. It is saying 2 in his own
+collection, and the sentiment is Ellen Langer's before it is his, so her name
+is on the cover under his and the full quote opens Chapter Two.
 
 Open `index.html` in any browser. Click a page to turn it, drag a corner to
 pull it across slowly, or use the arrow keys. No build step to read it, no install, and no network needed

@@ -224,6 +224,12 @@ body{
 .page--cover h1{ margin:0 0 .1em }
 .page--cover h3{ margin:1.15em 0 0 }
 .page--cover p{ margin:2.4em 0 0 }
+/* A second line under the name is a credit, not a second author, so it is
+   set smaller and italic and kept close to the name it hangs from. Size and
+   slope carry that difference, not fading: cream at .5 over the light cover
+   measured 3.41:1 at 10.5px, under AA. .66 measures 4.74 light, 6.57 dark,
+   against the mid stop of the gradient, which is the lightest it ever is. */
+.page--cover p+p{ margin:.6em 0 0; font-size:.62em; font-style:italic; opacity:.66 }
 .page h2+h3{ margin-top:.24em }
 /* A chapter opens with a drop cap, as a set book does. Anchored to h2 so it
    fires once per chapter, on the first prose paragraph after the epigraph,
@@ -477,6 +483,7 @@ body{
 <h1>Don’t Choose the Right Choice, Make the Choice Right</h1>
 <h3>A life, and what it taught</h3>
 <p>Manuchehr Qoriev</p>
+<p>after Dr. Ellen Langer, Harvard</p>
 </section>
 
 <section class="part-page" data-src="01-part-one.md">
@@ -607,6 +614,7 @@ body{
 <p>Two more, from nobody in particular and everybody in general, that belong here:</p>
 <blockquote><p>Ask for forgiveness, not permission.</p><p>Ideas are worthless.</p></blockquote>
 <p>The second one is not cynicism. It is a statement about which side of the door value lives on.</p>
+<p>The thought is not original, and it does not need to be. Ellen Langer, the Harvard psychologist, arrived at it first: <em>Rather than waste your time being stressed over making the right decision, make the decision right.</em> The title of this book is that sentiment in his own words, and her name is on the cover under his.</p>
 <p><span class="slot">anchor: the decision in Part One where you stopped looking for the right door.</span></p>
 </section>
 

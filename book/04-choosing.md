@@ -49,4 +49,10 @@ here:
 The second one is not cynicism. It is a statement about which side of the
 door value lives on.
 
+The thought is not original, and it does not need to be. Ellen Langer, the
+Harvard psychologist, arrived at it first: *Rather than waste your time being
+stressed over making the right decision, make the decision right.* The title
+of this book is that sentiment in his own words, and her name is on the cover
+under his.
+
 ⟨anchor: the decision in Part One where you stopped looking for the right door.⟩

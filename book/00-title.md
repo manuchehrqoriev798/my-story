@@ -5,3 +5,5 @@
 ### A life, and what it taught
 
 Manuchehr Qoriev
+
+after Dr. Ellen Langer, Harvard
